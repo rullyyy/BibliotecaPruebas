@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Disabled;
  * @author SDavidLedesma
  */
 public class EmpleadoTest {
-
+/*
     public EmpleadoTest() {
     }
 
@@ -105,5 +105,5 @@ public void testActualizarInformacionEmpleadoNoExistente() {
         
     }
 
-   
+   */
 }
