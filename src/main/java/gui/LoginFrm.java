@@ -35,6 +35,7 @@ public class LoginFrm extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Inicio de Sesión");
         setResizable(false);
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -69,6 +70,8 @@ public class LoginFrm extends javax.swing.JFrame {
 
     private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed
         JOptionPane.showMessageDialog(null, "¡Bienvenido " + "*nombre del empleado*" + "!");
+        new MainPageFrm().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnIniciarSesionActionPerformed
 
     /**
