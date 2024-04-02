@@ -4,7 +4,10 @@
  */
 package demo;
 
-import domain.Usuario;
+import dataAccess.IUsuarioDAO;
+import dataAccess.UsuarioDAO;
+import domain.UsuarioEntity;
+import java.util.Date;
 
 /**
  *
@@ -16,7 +19,7 @@ public class Demo {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Usuario usuario = new Usuario();
+     
     }
-    
+
 }

@@ -1,11 +1,11 @@
 package dataAccess;
 
-import domain.Usuario;
+import domain.UsuarioEntity;
 
 public interface IUsuarioDAO {
 	
-	public Usuario create();
-	public Usuario edit();
-	public Usuario read();
-	public Usuario delete();
+	public UsuarioEntity create(UsuarioEntity usuario);
+	public UsuarioEntity edit();
+	public UsuarioEntity read();
+	public UsuarioEntity delete();
 }
