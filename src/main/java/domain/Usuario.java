@@ -1,14 +1,33 @@
 package domain;
 import java.time.LocalDate;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import static javax.persistence.GenerationType.SEQUENCE;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
+@Entity
+@Table(name="usuario")
 public class Usuario{
 	
 	
+        @Id
+        @Column(name="id")
+        @GeneratedValue(strategy=SEQUENCE, generator="ID_SEQ")
 	private long id; 
+        @Column(name="nombre")
 	private String nombre;
-	private String apellidos;
+        @Column(name="apellidos")
+	private String apZellidos;
+        @Column(name="fechaNacimiento")
+        @Temporal(TemporalType.DATE)
 	private LocalDate fechaNacimiento;
+        @Column(name="curp")
 	private String curp;
+        @Column(name="matricula")
 	private long matricula;
 	
 	
