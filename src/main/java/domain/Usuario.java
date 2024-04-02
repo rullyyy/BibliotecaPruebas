@@ -1,79 +1,115 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package domain;
+import java.time.LocalDate;
 
-/**
- *
- * @author xfs85
- */
-public class Usuario {
-    private Long id;
-    private String nombre;
-    private String apellidoP;
-    private String apellidoM;
-    private String matricula;
+public class Usuario{
+	
+	
+	private long id; 
+	private String nombre;
+	private String apellidos;
+	private LocalDate fechaNacimiento;
+	private String curp;
+	private long matricula;
+	
+	
+	public Usuario()
+	{
+		
+	}
+	
+	public Usuario(String nombre, String apellidos, LocalDate fechaNacimiento, String curp, long matricula)
+	{
+		this.nombre = nombre;
+		this.apellidos = apellidos;
+		this.fechaNacimiento = fechaNacimiento;
+		this.curp = curp;
+		this.matricula = matricula;
+	}
+	
+	public Usuario(long id, String nombre, String apellidos, LocalDate fechaNacimiento, String curp, long matricula)
+	{
+		this.id = id;
+		this.nombre = nombre;
+		this.apellidos = apellidos;
+		this.fechaNacimiento = fechaNacimiento;
+		this.curp = curp;
+		this.matricula = matricula;
+	}
 
-    public Usuario() {
-    }
+	public long getId() 
+	{
+		return id;
+	}
 
-    public Usuario(String nombre, String apellidoP, String apellidoM, String matricula) {
-        this.nombre = nombre;
-        this.apellidoP = apellidoP;
-        this.apellidoM = apellidoM;
-        this.matricula = matricula;
-    }
+	public void setId(long id) 
+	{
+		this.id = id;
+	}
 
-    public Usuario(Long id, String nombre, String apellidoP, String apellidoM, String matricula) {
-        this.id = id;
-        this.nombre = nombre;
-        this.apellidoP = apellidoP;
-        this.apellidoM = apellidoM;
-        this.matricula = matricula;
-    }
-    
-    
+	public String getNombre() 
+	{
+		return nombre;
+	}
 
-    public Long getId() {
-        return id;
-    }
+	public void setNombre(String nombre)
+	{
+		this.nombre = nombre;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public String getApellidos() 
+	{
+		return apellidos;
+	}
 
-    public String getNombre() {
-        return nombre;
-    }
+	public void setApellidos(String apellidos) 
+	{
+		this.apellidos = apellidos;
+	}
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
+	public LocalDate getFechaNacimiento()
+	{
+		return fechaNacimiento;
+	}
 
-    public String getApellidoP() {
-        return apellidoP;
-    }
+	public void setFechaNacimiento(LocalDate fechaNacimiento)
+	{
+		this.fechaNacimiento = fechaNacimiento;
+	}
 
-    public void setApellidoP(String apellidoP) {
-        this.apellidoP = apellidoP;
-    }
+	public String getCurp() 
+	{
+		return curp;
+	}
 
-    public String getApellidoM() {
-        return apellidoM;
-    }
+	public void setCurp(String curp) 
+	{
+		this.curp = curp;
+	}
 
-    public void setApellidoM(String apellidoM) {
-        this.apellidoM = apellidoM;
-    }
+	public long getMatricula()
+	{
+		return matricula;
+	}
 
-    public String getMatricula() {
-        return matricula;
-    }
+	public void setMatricula(long matricula)
+	{
+		this.matricula = matricula;
+	}
 
-    public void setMatricula(String matricula) {
-        this.matricula = matricula;
-    }
-    
-    
+	@Override
+	public String toString()
+	{
+		return "Usuario [id=" + id + ", nombre=" + nombre + ", apellidos=" + apellidos + ", fechaNacimiento="
+				+ fechaNacimiento + ", curp=" + curp + ", matricula=" + matricula + "]";
+	}
+	
+	
+	
+	
+	
+	
+	
+
+	
+	
 }
