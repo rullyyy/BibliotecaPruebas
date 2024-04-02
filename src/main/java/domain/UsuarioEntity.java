@@ -13,6 +13,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.SEQUENCE;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -21,6 +23,7 @@ import javax.persistence.TemporalType;
  * @author luisp
  */
 @Entity
+
 public class UsuarioEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -42,32 +45,33 @@ public class UsuarioEntity implements Serializable {
     @Column(name="curp")
     private String curp;
     
-    @Column(name="matricula")
-    private long matricula;
+ 
     
+    @Column(name="password")
+    private String password;
     
     public UsuarioEntity()
     {
         
     }
 
-    public UsuarioEntity(String nombre, String apellidos, Date fechaNacimiento, String curp, long matricula)
+    public UsuarioEntity(String nombre, String apellidos, Date fechaNacimiento, String curp, String password)
     {
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.fechaNacimiento = fechaNacimiento;
         this.curp = curp;
-        this.matricula = matricula;
+        this.password = password;
     }
     
-    public UsuarioEntity(long id, String nombre, String apellidos, Date fechaNacimiento, String curp, long matricula)
+    public UsuarioEntity(long id, String nombre, String apellidos, Date fechaNacimiento, String curp, String password)
     {
         this.id = id;
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.fechaNacimiento = fechaNacimiento;
         this.curp = curp;
-        this.matricula = matricula;
+        this.password = password;
     }
 
     public long getId() 
@@ -120,16 +124,28 @@ public class UsuarioEntity implements Serializable {
         this.curp = curp;
     }
 
-    public long getMatricula() 
+   public String getPassword()
+   {
+       return this.password;
+   }
+   
+   public void setPassword(String password)
+   {
+       this.password = password;
+   }
+   
+   @Override
+    public String toString() 
     {
-        return matricula;
+        return "Usuario [id=" + id + ", nombre=" + nombre + ", apellidos=" + apellidos + ", fechaNacimiento="
+                + fechaNacimiento + ", curp=" + curp  + "]";
     }
-
-    public void setMatricula(long matricula) 
-    {
-        this.matricula = matricula;
-    }
-
+    
+   /**
+    * Metodo para detonar la persistencia en la base de datos a partir de un objeto que se reciba
+    * @param usuario
+    * @return 
+    */
     
     public UsuarioEntity create(UsuarioEntity usuario)
     {  
@@ -140,14 +156,15 @@ public class UsuarioEntity implements Serializable {
      * Método que regresa el acceso a la base de datos
      * @return una instancia de IUsuarioDAO
      */
-    public static IUsuarioDAO getDataAccessConnection(){
+    public IUsuarioDAO getDataAccessConnection(){
         IUsuarioDAO usuarioDAO = new UsuarioDAO();
         return usuarioDAO;
     }
-    @Override
-    public String toString() 
+
+    public String consultaPasswordConMatricula(Long id)
     {
-        return "Usuario [id=" + id + ", nombre=" + nombre + ", apellidos=" + apellidos + ", fechaNacimiento="
-                + fechaNacimiento + ", curp=" + curp + ", matricula=" + matricula + "]";
+        return getDataAccessConnection().consultaPasswordConMatricula(id);
+        
     }
+    
 }

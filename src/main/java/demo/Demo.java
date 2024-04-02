@@ -19,6 +19,9 @@ public class Demo {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+
+     UsuarioEntity user = new UsuarioEntity(); 
+     System.out.println(user.consultaPasswordConMatricula(Long.valueOf(3)));
      
     }
 
