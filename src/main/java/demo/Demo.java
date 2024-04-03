@@ -6,6 +6,8 @@ package demo;
 
 import dataAccess.IUsuarioDAO;
 import dataAccess.UsuarioDAO;
+import domain.EstadoLibro;
+import domain.LibroEntity;
 import domain.UsuarioEntity;
 import java.util.Date;
 import ui.DTOLogin;
@@ -30,6 +32,7 @@ public class Demo {
 //        System.out.println(usuarioObtenido.getId());
 //        System.out.println("");
         
+    LibroEntity libro = new LibroEntity("P", "P", EstadoLibro.PRESTADO);
     }
 
 }
