@@ -17,6 +17,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import ui.DTOLogin;
 
 /**
  *
@@ -28,44 +29,39 @@ public class UsuarioEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy=SEQUENCE, generator="ID_SEQ")
-    @Column(name="id")
-    private long id; 
-    
-    @Column(name="nombre")
+    @GeneratedValue(strategy = SEQUENCE, generator = "ID_SEQ")
+    @Column(name = "id")
+    private long id;
+
+    @Column(name = "nombre")
     private String nombre;
-    
-    @Column(name="apellidos")
+
+    @Column(name = "apellidos")
     private String apellidos;
-    
-    @Column(name="fechaNacimiento")
+
+    @Column(name = "fechaNacimiento")
     @Temporal(TemporalType.DATE)
     private Date fechaNacimiento;
-    
-    @Column(name="curp")
+
+    @Column(name = "curp")
     private String curp;
-    
- 
-    
-    @Column(name="password")
+
+    @Column(name = "password")
     private String password;
-    
-    public UsuarioEntity()
-    {
-        
+
+    public UsuarioEntity() {
+
     }
 
-    public UsuarioEntity(String nombre, String apellidos, Date fechaNacimiento, String curp, String password)
-    {
+    public UsuarioEntity(String nombre, String apellidos, Date fechaNacimiento, String curp, String password) {
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.fechaNacimiento = fechaNacimiento;
         this.curp = curp;
         this.password = password;
     }
-    
-    public UsuarioEntity(long id, String nombre, String apellidos, Date fechaNacimiento, String curp, String password)
-    {
+
+    public UsuarioEntity(long id, String nombre, String apellidos, Date fechaNacimiento, String curp, String password) {
         this.id = id;
         this.nombre = nombre;
         this.apellidos = apellidos;
@@ -74,97 +70,110 @@ public class UsuarioEntity implements Serializable {
         this.password = password;
     }
 
-    public long getId() 
-    {
+    public long getId() {
         return id;
     }
 
-    public void setId(long id)
-    {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public String getNombre() 
-    {
+    public String getNombre() {
         return nombre;
     }
 
-    public void setNombre(String nombre) 
-    {
+    public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
-    public String getApellidos() 
-    {
+    public String getApellidos() {
         return apellidos;
     }
 
-    public void setApellidos(String apellidos) 
-    {
+    public void setApellidos(String apellidos) {
         this.apellidos = apellidos;
     }
 
-    public Date getFechaNacimiento() 
-    {
+    public Date getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(Date fechaNacimiento) 
-    {
+    public void setFechaNacimiento(Date fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    public String getCurp() 
-    {
+    public String getCurp() {
         return curp;
     }
 
-    public void setCurp(String curp) 
-    {
+    public void setCurp(String curp) {
         this.curp = curp;
     }
 
-   public String getPassword()
-   {
-       return this.password;
-   }
-   
-   public void setPassword(String password)
-   {
-       this.password = password;
-   }
-   
-   @Override
-    public String toString() 
-    {
-        return "Usuario [id=" + id + ", nombre=" + nombre + ", apellidos=" + apellidos + ", fechaNacimiento="
-                + fechaNacimiento + ", curp=" + curp  + "]";
+    public String getPassword() {
+        return this.password;
     }
-    
-   /**
-    * Metodo para detonar la persistencia en la base de datos a partir de un objeto que se reciba
-    * @param usuario
-    * @return 
-    */
-    
-    public UsuarioEntity create(UsuarioEntity usuario)
-    {  
-        
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "Usuario [id=" + id + ", nombre=" + nombre + ", apellidos=" + apellidos + ", fechaNacimiento="
+                + fechaNacimiento + ", curp=" + curp + "]";
+    }
+
+    /**
+     * Metodo para detonar la persistencia en la base de datos a partir de un
+     * objeto que se reciba
+     *
+     * @param usuario
+     * @return
+     */
+    public UsuarioEntity create(UsuarioEntity usuario) {
+
         return getDataAccessConnection().create(usuario);
     }
+
     /**
      * Método que regresa el acceso a la base de datos
+     *
      * @return una instancia de IUsuarioDAO
      */
-    public IUsuarioDAO getDataAccessConnection(){
+    public IUsuarioDAO getDataAccessConnection() {
         IUsuarioDAO usuarioDAO = new UsuarioDAO();
         return usuarioDAO;
     }
 
-    public String consultaPasswordConMatricula(Long id)
+    /**
+     * Metodo que consulta la contraseña de un usuraio utilizando su matricula
+     * (ID)
+     *
+     * @param id id del usuario en el acceso a datos (la matricula en la UI)
+     * @return Una cadena con el valor del password del usuario
+     */
+    public String consultaPasswordConMatricula(Long id) 
     {
         return getDataAccessConnection().consultaPasswordConMatricula(id);
-        
+
     }
-    
+    /**
+     * Método para hacer login que confirma que la contraseña del DTO y de la DB sea la misma 
+     * 
+     * @param dtoLogin DTO que se envía desde la UI
+     * @return Si la contraseña es la misma regresa una entidad UsuarioEntity
+     */
+    public UsuarioEntity loginWithPassword(DTOLogin dtoLogin) 
+    {
+        IUsuarioDAO usuarioDAO = new UsuarioDAO();
+        String passwordUsuario = usuarioDAO.consultaPasswordConMatricula(dtoLogin.getMatricula());
+        if(passwordUsuario.equals(String.valueOf(dtoLogin.getPassword()))){
+            return usuarioDAO.consultaUsuarioConMatricula(dtoLogin.getMatricula());
+        }else{
+            return null;
+        }
+
+    }
+
 }

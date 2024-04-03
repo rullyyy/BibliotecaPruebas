@@ -3,8 +3,6 @@ package dataAccess;
 import domain.UsuarioEntity;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 
 public class UsuarioDAO implements IUsuarioDAO {
 
@@ -45,6 +43,7 @@ public class UsuarioDAO implements IUsuarioDAO {
     public UsuarioEntity delete() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+
     @Override
     public String consultaPasswordConMatricula(Long id) {
         EntityManager em = null;
@@ -66,7 +65,17 @@ public class UsuarioDAO implements IUsuarioDAO {
             }
         }
     }
-    
-    
 
+    public UsuarioEntity consultaUsuarioConMatricula(Long matricula) {
+        EntityManager em = null;
+        try {
+            em = getEntityManager();
+            return em.find(UsuarioEntity.class, matricula);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        
+    }
+    
 }

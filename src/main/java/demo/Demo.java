@@ -8,6 +8,8 @@ import dataAccess.IUsuarioDAO;
 import dataAccess.UsuarioDAO;
 import domain.UsuarioEntity;
 import java.util.Date;
+import ui.DTOLogin;
+import ui.LoginFrm;
 
 /**
  *
@@ -20,9 +22,14 @@ public class Demo {
      */
     public static void main(String[] args) {
 
-     UsuarioEntity user = new UsuarioEntity(); 
-     System.out.println(user.consultaPasswordConMatricula(Long.valueOf(3)));
-     
+        UsuarioEntity user = new UsuarioEntity(); 
+        new LoginFrm().setVisible(true);
+
+//        DTOLogin dtoLogin = new DTOLogin(3, "99");
+//        UsuarioEntity usuarioObtenido = login.solicitaLogin(dtoLogin);
+//        System.out.println(usuarioObtenido.getId());
+//        System.out.println("");
+        
     }
 
 }

@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package gui;
+package ui;
 
+import domain.UsuarioEntity;
 import javax.swing.JOptionPane;
 
 /**
@@ -50,7 +51,7 @@ public class LoginFrm extends javax.swing.JFrame {
         jPanel1.add(btnIniciarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 340, 140, 40));
         jPanel1.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(246, 260, 210, -1));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\xfs85\\OneDrive\\Documentos\\BibliotecaPruebas\\src\\main\\java\\gui\\TV - 1.png")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TV - 1.png"))); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -67,11 +68,23 @@ public class LoginFrm extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
+    public UsuarioEntity solicitaLogin(DTOLogin dto) {
+        UsuarioEntity userAccess = new UsuarioEntity();
+        return userAccess.loginWithPassword(dto);
+    }
     private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed
-        JOptionPane.showMessageDialog(null, "¡Bienvenido " + "*nombre del empleado*" + "!");
-        new MainPageFrm().setVisible(true);
-        this.dispose();
+        DTOLogin dtoLogin = new DTOLogin(Long.valueOf(
+                this.txtMatricula.getText()),
+                this.txtPassword.getText());
+        if (solicitaLogin(dtoLogin).getId()!= 0) {
+            JOptionPane.showMessageDialog(null, "¡Bienvenido " + solicitaLogin(dtoLogin).getNombre() + "!");
+            new MainPageFrm().setVisible(true);
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos");
+
+        }
+
     }//GEN-LAST:event_btnIniciarSesionActionPerformed
 
     /**

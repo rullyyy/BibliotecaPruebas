@@ -2,18 +2,18 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package gui;
+package ui;
 
 /**
  *
  * @author xfs85
  */
-public class GestionUsuariosFrm extends javax.swing.JFrame {
+public class GestionLibrosFrm extends javax.swing.JFrame {
 
     /**
-     * Creates new form GestionUsuariosFrm
+     * Creates new form GestionLibrosFrm
      */
-    public GestionUsuariosFrm() {
+    public GestionLibrosFrm() {
         initComponents();
     }
 
@@ -31,7 +31,7 @@ public class GestionUsuariosFrm extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        setTitle("Gestión de Usuarios");
+        setTitle("Gestión de Libros");
         setResizable(false);
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -44,7 +44,7 @@ public class GestionUsuariosFrm extends javax.swing.JFrame {
         });
         jPanel1.add(btnVolver, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 13, 40, 30));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GestionUsuarios.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GestionLibros.png"))); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -63,11 +63,10 @@ public class GestionUsuariosFrm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-      this.dispose();
+        this.dispose();
         new MainPageFrm().setVisible(true);
     }//GEN-LAST:event_btnVolverActionPerformed
 
-  
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnVolver;
