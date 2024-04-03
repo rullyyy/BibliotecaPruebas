@@ -9,9 +9,12 @@ import dataAccess.LibroDAO;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import ui.DTOAgregarLibro;
 
 /**
  *
@@ -22,7 +25,7 @@ public class LibroEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name= "id")
     private Long id;
     
@@ -32,7 +35,7 @@ public class LibroEntity implements Serializable {
     @Column(name ="autor")
     private String autor;
  
-    
+    @Enumerated(EnumType.STRING)
     @Column(name="estado")
     private EstadoLibro estado;
 
@@ -87,13 +90,32 @@ public class LibroEntity implements Serializable {
     public void setEstado(EstadoLibro estado) {
         this.estado = estado;
     }
-
+    /**
+     * Método que manda a llamar al método create del acceso a datos
+     * @param DTOLibro 
+     * @return LibroEntity que fue persistida
+     */
     
-    public LibroEntity create(LibroEntity libro){
-        return getDataAccessConnection().create(libro);
+    public LibroEntity create(DTOAgregarLibro DTOLibro){
+        return getDataAccessConnection().create(creaEntidadConDTO(DTOLibro));
     }
+    /**
+     * Método para obtener una instancia de LibroEntity con un DTO
+     * @param DTOLibro DTO con los datos para registrar al libro
+     * @return LibroEntity con los valores requeridos según el DTOLibro
+     */
     
-     public ILibroDAO getDataAccessConnection() {
+    public LibroEntity creaEntidadConDTO(DTOAgregarLibro DTOLibro)
+    {
+        LibroEntity libro = new LibroEntity(DTOLibro.getTitulo(), DTOLibro.getAutor(),EstadoLibro.DISPONIBLE );
+        return libro;
+    }
+    /**
+     * Método para obtener la interfaz del acceso a datos.
+     * @return Instancia de LibroDAO
+     */
+     public ILibroDAO getDataAccessConnection()
+     {
         ILibroDAO libroDAO = new LibroDAO();
         return libroDAO;
     }

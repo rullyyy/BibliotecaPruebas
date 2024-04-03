@@ -4,6 +4,9 @@
  */
 package ui;
 
+import domain.LibroEntity;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author luisp
@@ -28,7 +31,7 @@ public class AgregaLibroFrm extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         txtTitulo = new javax.swing.JTextField();
-        jTextField1 = new javax.swing.JTextField();
+        txtAutor = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -44,9 +47,14 @@ public class AgregaLibroFrm extends javax.swing.JFrame {
             }
         });
 
-        jTextField1.setToolTipText("e.g. 'Miguel de Cervantes'");
+        txtAutor.setToolTipText("e.g. 'Miguel de Cervantes'");
 
         jButton1.setText("Agregar!");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Autor");
 
@@ -66,7 +74,7 @@ public class AgregaLibroFrm extends javax.swing.JFrame {
                         .addGap(28, 28, 28)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE)
-                            .addComponent(jTextField1)))
+                            .addComponent(txtAutor)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(150, 150, 150)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -85,7 +93,7 @@ public class AgregaLibroFrm extends javax.swing.JFrame {
                     .addComponent(jLabel3))
                 .addGap(38, 38, 38)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addGap(46, 46, 46)
                 .addComponent(jButton1)
@@ -99,6 +107,17 @@ public class AgregaLibroFrm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTituloActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        LibroEntity libroAccess = new LibroEntity();
+        DTOAgregarLibro agregarLibroDTO = new  DTOAgregarLibro(this.txtTitulo.getText(), this.txtAutor.getText());
+        libroAccess.create(agregarLibroDTO);
+        JOptionPane.showConfirmDialog(null, "Success!!");
+    }//GEN-LAST:event_jButton1ActionPerformed
+    
+    private boolean validaCamposVacios(){
+        
+        return false;
+    }
     /**
      * @param args the command line arguments
      */
@@ -139,7 +158,7 @@ public class AgregaLibroFrm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField txtAutor;
     private javax.swing.JTextField txtTitulo;
     // End of variables declaration//GEN-END:variables
 }

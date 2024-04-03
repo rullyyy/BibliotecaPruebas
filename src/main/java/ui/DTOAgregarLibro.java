@@ -5,7 +5,8 @@
 package ui;
 
 /**
- *
+ * DTO que se usa en el proceso de registrar un nuevo libro. Guarda los valores de titulo y autor para 
+ * pasarlos a la siguiente capa.
  * @author luisp
  */
 public class DTOAgregarLibro {

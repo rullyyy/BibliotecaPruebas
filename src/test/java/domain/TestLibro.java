@@ -5,17 +5,17 @@
 package domain;
 import static org.junit.jupiter.api.Assertions.*;
 import dataAccess.ILibroDAO;
-import java.util.Date;
 import org.junit.jupiter.api.Test;
 import static org.mockito.Mockito.*;
+import ui.DTOAgregarLibro;
 /**
  *
  * @author xfs85
  */
 public class TestLibro {
     /*
-    Este metodo de prueba verifica que el metodo create() de la clase
-    LibroDAO funcione correctamente, creando un nuevo objeto LibroEntity 
+        Este metodo de prueba verifica que el metodo create() de la clase
+        LibroDAO funcione correctamente, creando un nuevo objeto LibroEntity 
     */
     
     @Test
@@ -27,11 +27,20 @@ public class TestLibro {
     }
     
     @Test
-public void testGetDataAccessConnection() {
-    ILibroDAO mockILibroDAO = mock(ILibroDAO.class);
-    LibroEntity libro = mock(LibroEntity.class);
-    when(libro.getDataAccessConnection()).thenReturn(mockILibroDAO);
-    assertEquals(libro.getDataAccessConnection(), mockILibroDAO);
-}
+    public void testGetDataAccessConnection() {
+        ILibroDAO mockILibroDAO = mock(ILibroDAO.class);
+        LibroEntity libro = mock(LibroEntity.class);
+        when(libro.getDataAccessConnection()).thenReturn(mockILibroDAO);
+        assertEquals(libro.getDataAccessConnection(), mockILibroDAO);
+    }
+    /**
+     * Este método crea una instancia de DTOAgregarLibro y la persiste hacia la base de datos
+     */
+    @Test 
+    public void pruebaIntegracionAgregarLibro(){
+        DTOAgregarLibro agregarLibroDTO = new DTOAgregarLibro("El quijote", "Miguel de Cervantes");
+        LibroEntity libroEntity = new LibroEntity();
+        assertEquals(agregarLibroDTO.getTitulo(),  libroEntity.create(agregarLibroDTO).getTitulo());
+    }
 
 }
