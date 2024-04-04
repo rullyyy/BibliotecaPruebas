@@ -4,17 +4,10 @@
  */
 package dataAccess;
 
-import dataAccess.exceptions.NonexistentEntityException;
 import domain.LibroEntity;
 import domain.UsuarioEntity;
-import java.io.Serializable;
-import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Query;
-import javax.persistence.EntityNotFoundException;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 
 /**
  *
@@ -43,10 +36,25 @@ public class LibroDAO implements ILibroDAO {
         return libro;
     }
 
-    
     @Override
-    public UsuarioEntity update() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public LibroEntity update(LibroEntity libro) {
+        EntityManager em = null;
+        try {
+            em = getEntityManager();
+            em.getTransaction().begin();
+            libro = em.merge(libro); // Actualiza la entidad
+            em.getTransaction().commit();
+            return libro;
+        } catch (Exception e) {
+            if (em != null) {
+                em.getTransaction().rollback();
+            }
+            throw new RuntimeException("No se pudo actualizar el libro", e);
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
     }
 
     @Override
@@ -68,9 +76,7 @@ public class LibroDAO implements ILibroDAO {
     public String actualizaValoracionExistente() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
-    
-    
+
 //    public void edit(LibroEntity libroEntity) throws NonexistentEntityException, Exception {
 //        EntityManager em = null;
 //        try {
@@ -161,5 +167,13 @@ public class LibroDAO implements ILibroDAO {
 //        }
 //    }
 //    
+    public LibroEntity findById(Long libroId) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public UsuarioEntity update() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 
 }

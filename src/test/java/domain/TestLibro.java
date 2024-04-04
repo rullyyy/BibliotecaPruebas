@@ -5,8 +5,10 @@
 package domain;
 import static org.junit.jupiter.api.Assertions.*;
 import dataAccess.ILibroDAO;
+import dataAccess.LibroDAO;
 import org.junit.jupiter.api.Test;
 import static org.mockito.Mockito.*;
+import org.mockito.stubbing.OngoingStubbing;
 import ui.DTOAgregarLibro;
 /**
  *
@@ -43,4 +45,16 @@ public class TestLibro {
         assertEquals(agregarLibroDTO.getTitulo(),  libroEntity.create(agregarLibroDTO).getTitulo());
     }
 
+    @Test
+     public void testPrestarLibro() {
+        LibroDAO mockLibroDAO = mock(LibroDAO.class);
+        LibroEntity libro = new LibroEntity(1L, "El Principito", "Antoine de Saint-Exupéry", EstadoLibro.DISPONIBLE);
+        when(mockLibroDAO.findById(anyLong())).thenReturn(libro);
+        PrestamoLibroService prestamoLibroService = new PrestamoLibroService(mockLibroDAO);
+        boolean resultado = prestamoLibroService.prestarLibro(1L, "usuariocaliz");
+        assertTrue(resultado);
+        assertEquals(EstadoLibro.PRESTADO, libro.getEstado());
+        verify(mockLibroDAO).findById(1L);
+        verify(mockLibroDAO).update(libro);
+    }
 }
