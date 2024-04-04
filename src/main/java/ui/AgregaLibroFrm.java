@@ -19,7 +19,8 @@ public class AgregaLibroFrm extends javax.swing.JFrame {
     public AgregaLibroFrm() {
         initComponents();
     }
-
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -29,94 +30,92 @@ public class AgregaLibroFrm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
         txtTitulo = new javax.swing.JTextField();
+        btnAgregar = new javax.swing.JButton();
         txtAutor = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        btnVolver = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
-        jLabel1.setText("Agregar Libro");
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        txtTitulo.setToolTipText("e.g. 'El principito'");
-        txtTitulo.addActionListener(new java.awt.event.ActionListener() {
+        txtTitulo.setBorder(null);
+        jPanel2.add(txtTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 200, 160, 20));
+
+        btnAgregar.setContentAreaFilled(false);
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTituloActionPerformed(evt);
+                btnAgregarActionPerformed(evt);
             }
         });
+        jPanel2.add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(127, 420, 105, 34));
 
-        txtAutor.setToolTipText("e.g. 'Miguel de Cervantes'");
-
-        jButton1.setText("Agregar!");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        txtAutor.setBorder(null);
+        txtAutor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                txtAutorActionPerformed(evt);
             }
         });
+        jPanel2.add(txtAutor, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 305, 160, 20));
 
-        jLabel2.setText("Autor");
+        btnVolver.setBorder(null);
+        btnVolver.setContentAreaFilled(false);
+        btnVolver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVolverActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnVolver, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 13, 40, 30));
 
-        jLabel3.setText("´Título");
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/AgregarLibro.png"))); // NOI18N
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(69, 69, 69)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel2))
-                        .addGap(28, 28, 28)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE)
-                            .addComponent(txtAutor)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(150, 150, 150)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jButton1))))
-                .addContainerGap(175, Short.MAX_VALUE))
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addComponent(jLabel1)
-                .addGap(35, 35, 35)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
-                .addGap(38, 38, 38)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addGap(46, 46, 46)
-                .addComponent(jButton1)
-                .addContainerGap(67, Short.MAX_VALUE))
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtTituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTituloActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTituloActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+      if(validaCamposVacios() == true){
         LibroEntity libroAccess = new LibroEntity();
         DTOAgregarLibro agregarLibroDTO = new  DTOAgregarLibro(this.txtTitulo.getText(), this.txtAutor.getText());
         libroAccess.create(agregarLibroDTO);
-        JOptionPane.showConfirmDialog(null, "Success!!");
-    }//GEN-LAST:event_jButton1ActionPerformed
+        JOptionPane.showMessageDialog(null, "Se ha guardado el libro correctamente");
+        this.dispose();
+        new GestionLibrosFrm().setVisible(true);
+      }else{
+          JOptionPane.showMessageDialog(null, "Campos vacíos o invalidos, ingrese nuevamente");
+      }
+    }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void txtAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAutorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtAutorActionPerformed
+
+    private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
+       
+        this.dispose();
+       new MainPageFrm().setVisible(true);
+    }//GEN-LAST:event_btnVolverActionPerformed
     
     private boolean validaCamposVacios(){
-        
-        return false;
+        if(txtTitulo.getText().isBlank() || txtAutor.getText().isBlank()){
+            return false;
+        }
+        return true;
     }
     /**
      * @param args the command line arguments
@@ -154,10 +153,10 @@ public class AgregaLibroFrm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnAgregar;
+    private javax.swing.JButton btnVolver;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField txtAutor;
     private javax.swing.JTextField txtTitulo;
     // End of variables declaration//GEN-END:variables

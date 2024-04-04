@@ -6,8 +6,11 @@ package dataAccess;
 
 import domain.LibroEntity;
 import domain.UsuarioEntity;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaQuery;
 
 /**
  *
@@ -113,29 +116,29 @@ public class LibroDAO implements ILibroDAO {
 //        }
 //    }
 //
-//    public List<LibroEntity> findLibroEntityEntities() {
-//        return findLibroEntityEntities(true, -1, -1);
-//    }
-//
-//    public List<LibroEntity> findLibroEntityEntities(int maxResults, int firstResult) {
-//        return findLibroEntityEntities(false, maxResults, firstResult);
-//    }
-//
-//    private List<LibroEntity> findLibroEntityEntities(boolean all, int maxResults, int firstResult) {
-//        EntityManager em = getEntityManager();
-//        try {
-//            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-//            cq.select(cq.from(LibroEntity.class));
-//            Query q = em.createQuery(cq);
-//            if (!all) {
-//                q.setMaxResults(maxResults);
-//                q.setFirstResult(firstResult);
-//            }
-//            return q.getResultList();
-//        } finally {
-//            em.close();
-//        }
-//    }
+    public List<LibroEntity> findLibroEntityEntities() {
+        return findLibroEntityEntities(true, -1, -1);
+    }
+
+    public List<LibroEntity> findLibroEntityEntities(int maxResults, int firstResult) {
+        return findLibroEntityEntities(false, maxResults, firstResult);
+    }
+
+    private List<LibroEntity> findLibroEntityEntities(boolean all, int maxResults, int firstResult) {
+        EntityManager em = getEntityManager();
+        try {
+            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+            cq.select(cq.from(LibroEntity.class));
+            Query q = em.createQuery(cq);
+            if (!all) {
+                q.setMaxResults(maxResults);
+                q.setFirstResult(firstResult);
+            }
+            return q.getResultList();
+        } finally {
+            em.close();
+        }
+    }
 //
 //    public LibroEntity findLibroEntity(Long id) {
 //        EntityManager em = getEntityManager();

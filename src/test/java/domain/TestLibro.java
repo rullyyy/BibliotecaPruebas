@@ -6,6 +6,7 @@ package domain;
 import static org.junit.jupiter.api.Assertions.*;
 import dataAccess.ILibroDAO;
 import dataAccess.LibroDAO;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import static org.mockito.Mockito.*;
 import org.mockito.stubbing.OngoingStubbing;
@@ -64,4 +65,11 @@ public class TestLibro {
         verify(mockLibroDAO).findById(1L);
         verify(mockLibroDAO).update(libro);
     }
+     
+     @Test
+     public void testCargarLibro(){
+         LibroDAO ldao = new LibroDAO();
+         List<LibroEntity> libros = ldao.findLibroEntityEntities();
+         assertFalse(libros.isEmpty());
+     }
 }

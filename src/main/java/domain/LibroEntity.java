@@ -7,6 +7,7 @@ package domain;
 import dataAccess.ILibroDAO;
 import dataAccess.LibroDAO;
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -132,4 +133,9 @@ public class LibroEntity implements Serializable {
         ILibroDAO libroDAO = new LibroDAO();
         return libroDAO;
     }
+     
+     public List<LibroEntity> cargarLibros(){
+         LibroDAO libroDAO = new LibroDAO();
+        return libroDAO.findLibroEntityEntities();
+     }
 }

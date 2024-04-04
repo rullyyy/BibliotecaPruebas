@@ -4,6 +4,11 @@
  */
 package ui;
 
+import domain.LibroEntity;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
+
 /**
  *
  * @author xfs85
@@ -13,10 +18,59 @@ public class GestionLibrosFrm extends javax.swing.JFrame {
     /**
      * Creates new form GestionLibrosFrm
      */
+    List<LibroEntity> libros;
+    DefaultTableModel tableModelBooks = new DefaultTableModel();
+    LibroEntity libroModel = new LibroEntity();
+    
     public GestionLibrosFrm() {
         initComponents();
+        tableModelBooks.addColumn("ID");
+        tableModelBooks.addColumn("Titulo");
+        tableModelBooks.addColumn("Autor");
+        tableModelBooks.addColumn("Estado");
+        
+        librosTable.setModel(tableModelBooks);
+        
+      
+            
+            TableColumn columnID = librosTable.getColumnModel().getColumn(0);
+            
+            columnID.setResizable(false);
+            
+            
+            TableColumn columnTitle = librosTable.getColumnModel().getColumn(1);
+            
+            columnTitle.setResizable(false);
+        
+        TableColumn columnAutor = librosTable.getColumnModel().getColumn(2);
+            
+            columnAutor.setResizable(false);
+            
+            TableColumn columnEstado = librosTable.getColumnModel().getColumn(3);
+            
+            columnEstado.setResizable(false);
+            
+        cargarLibros();
     }
 
+    private void cargarLibros() {
+        List<LibroEntity> libros = libroModel.cargarLibros();
+        this.libros = libros; 
+        tableModelBooks.setRowCount(0);
+        
+        for (LibroEntity libro : libros) {
+            Object[] row = {
+                libro.getId(),
+                libro.getTitulo(),
+                libro.getAutor(),
+                libro.getEstado()
+               
+            };
+
+            tableModelBooks.addRow(row);
+
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -28,6 +82,9 @@ public class GestionLibrosFrm extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         btnVolver = new javax.swing.JButton();
+        btnAgregar = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        librosTable = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -43,6 +100,30 @@ public class GestionLibrosFrm extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnVolver, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 13, 40, 30));
+
+        btnAgregar.setBorder(null);
+        btnAgregar.setContentAreaFilled(false);
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 193, 110, 40));
+
+        librosTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane1.setViewportView(librosTable);
+
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 100, 350, 350));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GestionLibros.png"))); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -67,10 +148,18 @@ public class GestionLibrosFrm extends javax.swing.JFrame {
         new MainPageFrm().setVisible(true);
     }//GEN-LAST:event_btnVolverActionPerformed
 
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+       this.dispose();
+       new AgregaLibroFrm().setVisible(true);
+    }//GEN-LAST:event_btnAgregarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnVolver;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable librosTable;
     // End of variables declaration//GEN-END:variables
 }
