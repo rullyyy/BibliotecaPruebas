@@ -12,7 +12,6 @@ package ui;
 public class DTOAgregarLibro {
     private String titulo;
     private String autor;
-
     public DTOAgregarLibro() 
     {
         

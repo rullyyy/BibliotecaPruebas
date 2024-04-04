@@ -44,6 +44,13 @@ public class TestLibro {
         LibroEntity libroEntity = new LibroEntity();
         assertEquals(agregarLibroDTO.getTitulo(),  libroEntity.create(agregarLibroDTO).getTitulo());
     }
+    
+    @Test 
+    public void pruebaEstadoLibro(){
+        DTOAgregarLibro agregarLibroDTO = new DTOAgregarLibro("El quijote", "Miguel de Cervantes");
+        LibroEntity libroEntity = new LibroEntity();
+        assertEquals("DISPONIBLE",  libroEntity.create(agregarLibroDTO).getEstado());
+    }
 
     @Test
      public void testPrestarLibro() {

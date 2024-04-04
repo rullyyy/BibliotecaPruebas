@@ -38,8 +38,10 @@ public class LibroEntity implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name="estado")
     private EstadoLibro estado;
-
-    
+//
+//    @Column(name="keyword")
+//    private String keyword;
+//    
     
     public LibroEntity() {
     }
@@ -57,7 +59,7 @@ public class LibroEntity implements Serializable {
         this.autor = autor;
         this.estado = estado;
     }
-    
+
     
     public Long getId() {
         return id;
@@ -90,6 +92,17 @@ public class LibroEntity implements Serializable {
     public void setEstado(EstadoLibro estado) {
         this.estado = estado;
     }
+    
+//    
+//    public String getKeyword() {
+//        return keyword;
+//    }
+//
+//    public void setKeyword(String keyword) {
+//        this.keyword = keyword;
+//    }
+//    
+    
     /**
      * Método que manda a llamar al método create del acceso a datos
      * @param DTOLibro 
@@ -107,7 +120,7 @@ public class LibroEntity implements Serializable {
     
     public LibroEntity creaEntidadConDTO(DTOAgregarLibro DTOLibro)
     {
-        LibroEntity libro = new LibroEntity(DTOLibro.getTitulo(), DTOLibro.getAutor(),EstadoLibro.DISPONIBLE );
+        LibroEntity libro = new LibroEntity(DTOLibro.getTitulo(), DTOLibro.getAutor(),EstadoLibro.DISPONIBLE);
         return libro;
     }
     /**

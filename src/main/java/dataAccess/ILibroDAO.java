@@ -14,9 +14,8 @@ import domain.UsuarioEntity;
 public interface ILibroDAO {
     public LibroEntity create(LibroEntity libro);
     public LibroEntity update(LibroEntity libro);
-    public UsuarioEntity update();
-    public UsuarioEntity read();
-    public UsuarioEntity delete();
+    public LibroEntity read();
+    public LibroEntity delete();
     public String creaValoracion();
     public String actualizaValoracionExistente();
 }

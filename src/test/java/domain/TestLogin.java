@@ -4,6 +4,8 @@
  */
 package domain;
 
+import dataAccess.BibliotecarioDAO;
+import dataAccess.IBibliotecarioDAO;
 import dataAccess.IUsuarioDAO;
 import dataAccess.UsuarioDAO;
 import org.junit.jupiter.api.Test;
@@ -22,13 +24,13 @@ public class TestLogin {
      */
     @Test 
     public void consultaContraseñaConID(){
-        IUsuarioDAO usuarioDAO =  Mockito.mock(UsuarioDAO.class);
+        IBibliotecarioDAO bdao =  Mockito.mock(BibliotecarioDAO.class);
         
-        Mockito.when(usuarioDAO.consultaPasswordConMatricula(3l)).thenReturn("99");
+        Mockito.when(bdao.consultaPasswordConMatricula(1L)).thenReturn("99");
         
-        UsuarioEntity userAccess = new UsuarioEntity();
+        BibliotecarioEntity userAccess = new BibliotecarioEntity();
         
-        assertEquals(userAccess.consultaPasswordConMatricula(3l), "99");
+        assertEquals(userAccess.consultaPasswordConMatricula(1L), "99");
     }
     
     /**
@@ -39,19 +41,27 @@ public class TestLogin {
     @Test
     public void solicitaInicioSesion()
     {
-        // Instancia del loginFRM
-        LoginFrm login = new LoginFrm();
-        // Creación de un DTO de prueba
-        DTOLogin dtoLogin = new DTOLogin(1, "admin");
-        // Creación de una entidad de usuario para el accesso a dominio
-        UsuarioEntity user = new UsuarioEntity();
-        // Establecemos los mismos valores para el usuario de dominio
-        user.setId(1);
-        user.setPassword("admin");
-        // Utilizamos Mockito para devolver el objeto de dominio cuando se llame al solicitar login
-        Mockito.when(login.solicitaLogin(dtoLogin)).thenReturn(user);
-        // comprobamos que los valores coincida¿n
-        assertEquals(login.solicitaLogin(dtoLogin).getPassword(), user.getPassword());
+  
+    // Mock del objeto LoginFrm
+    LoginFrm login = Mockito.mock(LoginFrm.class);
+
+    // Creación de un DTO de prueba
+    DTOLogin dtoLogin = new DTOLogin(1, "admin");
+
+    // Creación de una entidad de usuario para el acceso a dominio
+    BibliotecarioEntity user = new BibliotecarioEntity();
+    user.setId(1L);
+    user.setPassword("admin");
+
+    // Establecemos los mismos valores para el usuario de dominio
+    Mockito.when(login.solicitaLogin(dtoLogin)).thenReturn(user);
+
+    // Llamada al método que estamos probando
+    BibliotecarioEntity returnedUser = login.solicitaLogin(dtoLogin);
+
+    // comprobamos que los valores coincidan
+    assertEquals(returnedUser.getPassword(), user.getPassword());
+
     }
     /**
      * Prueba unitaria de integración para comprobar que se inicie sesión correctamente
@@ -61,7 +71,7 @@ public class TestLogin {
     {
         LoginFrm login = new LoginFrm();
         // cambiar por un valor existente en la base de datos
-        DTOLogin dtoLogin = new DTOLogin(3, "99");
+        DTOLogin dtoLogin = new DTOLogin(1, "99");
         // Comprobamos que el valor que se regresa en el método de login sea el correspondiente a nuestro DTO
         assertEquals(login.solicitaLogin(dtoLogin).getId(), dtoLogin.getMatricula());
 

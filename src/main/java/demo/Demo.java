@@ -6,6 +6,7 @@ package demo;
 
 import dataAccess.IUsuarioDAO;
 import dataAccess.UsuarioDAO;
+import domain.BibliotecarioEntity;
 import domain.EstadoLibro;
 import domain.LibroEntity;
 import domain.UsuarioEntity;
@@ -27,10 +28,10 @@ public class Demo {
         UsuarioEntity user = new UsuarioEntity(); 
         new LoginFrm().setVisible(true);
 
-//        DTOLogin dtoLogin = new DTOLogin(3, "99");
-//        UsuarioEntity usuarioObtenido = login.solicitaLogin(dtoLogin);
-//        System.out.println(usuarioObtenido.getId());
-//        System.out.println("");
+        BibliotecarioEntity b = new BibliotecarioEntity(1L, "Raul", "Luna", "99");
+        b.create(b);
+    
+        
         
     LibroEntity libro = new LibroEntity("P", "P", EstadoLibro.PRESTADO);
     }

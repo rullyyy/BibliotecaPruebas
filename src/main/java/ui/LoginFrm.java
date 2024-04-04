@@ -4,6 +4,7 @@
  */
 package ui;
 
+import domain.BibliotecarioEntity;
 import domain.UsuarioEntity;
 import javax.swing.JOptionPane;
 
@@ -68,8 +69,8 @@ public class LoginFrm extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-    public UsuarioEntity solicitaLogin(DTOLogin dto) {
-        UsuarioEntity userAccess = new UsuarioEntity();
+    public BibliotecarioEntity solicitaLogin(DTOLogin dto) {
+        BibliotecarioEntity userAccess = new BibliotecarioEntity();
         return userAccess.loginWithPassword(dto);
     }
     private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed

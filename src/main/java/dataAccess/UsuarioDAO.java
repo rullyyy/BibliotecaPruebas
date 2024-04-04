@@ -44,38 +44,6 @@ public class UsuarioDAO implements IUsuarioDAO {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    @Override
-    public String consultaPasswordConMatricula(Long id) {
-        EntityManager em = null;
-        try {
-            em = getEntityManager();
-            UsuarioEntity usuarioFound = em.find(UsuarioEntity.class, id);
-            if (usuarioFound != null) {
-                return usuarioFound.getPassword();
-            } else {
-                // Handle the case when usuarioFound is null
-                return null; // or throw an exception, log an error, etc.
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        } finally {
-            if (em != null) {
-                em.close(); // Close the EntityManager
-            }
-        }
-    }
 
-    public UsuarioEntity consultaUsuarioConMatricula(Long matricula) {
-        EntityManager em = null;
-        try {
-            em = getEntityManager();
-            return em.find(UsuarioEntity.class, matricula);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-        
-    }
     
 }
