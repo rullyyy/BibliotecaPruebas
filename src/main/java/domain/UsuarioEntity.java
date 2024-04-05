@@ -7,6 +7,8 @@ package domain;
 import dataAccess.IUsuarioDAO;
 import dataAccess.UsuarioDAO;
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +19,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import ui.DTOAgregarUsuario;
 import ui.DTOLogin;
 
 /**
@@ -45,27 +48,30 @@ public class UsuarioEntity implements Serializable {
 
     @Column(name = "curp")
     private String curp;
+    
+    @Column (name = "Matricula")
+    private String matricula;
 
 
     public UsuarioEntity() {
 
     }
 
-    public UsuarioEntity(String nombre, String apellidos, Date fechaNacimiento, String curp) {
+    public UsuarioEntity(String nombre, String apellidos, Date fechaNacimiento, String curp, String matricula) {
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.fechaNacimiento = fechaNacimiento;
         this.curp = curp;
-        
+        this.matricula = matricula;
     }
 
-    public UsuarioEntity(long id, String nombre, String apellidos, Date fechaNacimiento, String curp) {
+    public UsuarioEntity(long id, String nombre, String apellidos, Date fechaNacimiento, String curp, String matricula) {
         this.id = id;
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.fechaNacimiento = fechaNacimiento;
         this.curp = curp;
-        
+        this.matricula = matricula;
     }
 
     public long getId() {
@@ -108,6 +114,13 @@ public class UsuarioEntity implements Serializable {
         this.curp = curp;
     }
 
+    public String getMatricula() {
+        return matricula;
+    }
+
+    public void setMatricula(String matricula) {
+        this.matricula = matricula;
+    }
 
     @Override
     public String toString() {
@@ -122,9 +135,18 @@ public class UsuarioEntity implements Serializable {
      * @param usuario
      * @return
      */
-    public UsuarioEntity create(UsuarioEntity usuario) {
+    public UsuarioEntity create(DTOAgregarUsuario usuario) {
 
-        return getDataAccessConnection().create(usuario);
+        return getDataAccessConnection().create(crearEntidadConDTO(usuario));
+    }
+    
+    public UsuarioEntity crearEntidadConDTO(DTOAgregarUsuario DTOUsuario){
+        LocalDate localDate = DTOUsuario.getFechaNacimiento();
+        Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        
+        UsuarioEntity usuario = new UsuarioEntity(DTOUsuario.getNombre(), DTOUsuario.getApellido(), date,
+            DTOUsuario.getCurp(),DTOUsuario.getMatricula());
+        return usuario;
     }
 
     /**
