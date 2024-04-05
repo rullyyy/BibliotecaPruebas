@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -157,6 +158,15 @@ public class UsuarioEntity implements Serializable {
     public IUsuarioDAO getDataAccessConnection() {
         IUsuarioDAO usuarioDAO = new UsuarioDAO();
         return usuarioDAO;
+    }
+    
+    /**
+     * Método para traer a los usuarios de la Base de Datos
+     * 
+     * @return Lista de Usuarios
+     */
+    public List<UsuarioEntity> findUsuarioEntityEntities() {
+        return getDataAccessConnection().findUsers(true, -1, -1);
     }
 
    

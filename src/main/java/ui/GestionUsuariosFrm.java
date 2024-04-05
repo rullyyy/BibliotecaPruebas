@@ -4,6 +4,8 @@
  */
 package ui;
 
+import domain.UsuarioEntity;
+import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -12,6 +14,9 @@ import javax.swing.table.DefaultTableModel;
  */
 public class GestionUsuariosFrm extends javax.swing.JFrame {
 
+    UsuarioEntity usuario = new UsuarioEntity();
+    private List<UsuarioEntity> listaTabla;
+    
     /**
      * Creates new form GestionUsuariosFrm
      */
@@ -41,6 +46,11 @@ public class GestionUsuariosFrm extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Gestión de Usuarios");
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -69,14 +79,14 @@ public class GestionUsuariosFrm extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 390, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 340, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 340, Short.MAX_VALUE)
         );
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, 380, 340));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, 390, 340));
 
         btnAgregarUsuario.setBorder(null);
         btnAgregarUsuario.setContentAreaFilled(false);
@@ -123,6 +133,10 @@ public class GestionUsuariosFrm extends javax.swing.JFrame {
         new AgregarUsuarioFrm().setVisible(true);
     }//GEN-LAST:event_btnAgregarUsuarioActionPerformed
 
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        cargarTabla();
+    }//GEN-LAST:event_formWindowOpened
+
   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -149,6 +163,15 @@ public class GestionUsuariosFrm extends javax.swing.JFrame {
         
         String titulos[] = {"Matricula","Nombre","Apellidos","F.Nacimiento","Curp"};
         tabla.setColumnIdentifiers(titulos);
+        List<UsuarioEntity> listaUsuarios = usuario.findUsuarioEntityEntities();
+        
+        if(listaUsuarios != null){
+            for(UsuarioEntity usu : listaUsuarios){
+                Object[] objeto = {usu.getMatricula(), usu.getNombre(),usu.getApellidos(),usu.getFechaNacimiento(),usu.getCurp()};
+                tabla.addRow(objeto);
+            }
+            tablaUsuarios.setModel(tabla);
+        }  
     }
 
 
