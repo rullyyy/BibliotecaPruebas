@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.SEQUENCE;
 import javax.persistence.Id;
@@ -35,7 +36,7 @@ public class UsuarioEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = SEQUENCE, generator = "ID_SEQ")
     @Column(name = "id")
-    private long id;
+    private int id;
 
     @Column(name = "nombre")
     private String nombre;
@@ -66,7 +67,7 @@ public class UsuarioEntity implements Serializable {
         this.matricula = matricula;
     }
 
-    public UsuarioEntity(long id, String nombre, String apellidos, Date fechaNacimiento, String curp, String matricula) {
+    public UsuarioEntity(int id, String nombre, String apellidos, Date fechaNacimiento, String curp, String matricula) {
         this.id = id;
         this.nombre = nombre;
         this.apellidos = apellidos;
@@ -75,11 +76,11 @@ public class UsuarioEntity implements Serializable {
         this.matricula = matricula;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -168,6 +169,19 @@ public class UsuarioEntity implements Serializable {
     public List<UsuarioEntity> findUsuarioEntityEntities() {
         return getDataAccessConnection().findUsers(true, -1, -1);
     }
+    
+    
+    /**
+     * Método para traer un solo Usuario de la Base de Datos
+     * 
+     * @param id
+     * @return 
+     */
+    public UsuarioEntity findUser(int id){
+        return getDataAccessConnection().findUser(id);
+    }
+    
+    
 
    
 }

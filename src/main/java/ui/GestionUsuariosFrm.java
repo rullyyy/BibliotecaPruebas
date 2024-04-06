@@ -6,6 +6,8 @@ package ui;
 
 import domain.UsuarioEntity;
 import java.util.List;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -99,6 +101,11 @@ public class GestionUsuariosFrm extends javax.swing.JFrame {
 
         btnEditarUsuario.setBorder(null);
         btnEditarUsuario.setContentAreaFilled(false);
+        btnEditarUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarUsuarioActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnEditarUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 300, 110, 40));
 
         btnRegresar.setBorder(null);
@@ -137,6 +144,23 @@ public class GestionUsuariosFrm extends javax.swing.JFrame {
         cargarTabla();
     }//GEN-LAST:event_formWindowOpened
 
+    private void btnEditarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarUsuarioActionPerformed
+        if(tablaUsuarios.getRowCount() > 0){
+            if(tablaUsuarios.getSelectedRow() !=-1){
+                int id = Integer.parseInt(String.valueOf(tablaUsuarios.getValueAt(tablaUsuarios.getSelectedRow(), 0)));
+                EditarUsuarioFrm pantallaEditar = new EditarUsuarioFrm(id);
+                pantallaEditar.setVisible(true);
+                pantallaEditar.setLocationRelativeTo(null);
+                
+                this.dispose();
+            }else{
+                mostrarMensaje("No seleccionó ningun Usuario", "Error", "Error al Editar");
+            }
+        }else{
+            mostrarMensaje("No usuarios para Editar", "Error", "Error al Editar");
+        }
+    }//GEN-LAST:event_btnEditarUsuarioActionPerformed
+
   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -172,6 +196,19 @@ public class GestionUsuariosFrm extends javax.swing.JFrame {
             }
             tablaUsuarios.setModel(tabla);
         }  
+    }
+    
+    public void mostrarMensaje (String mensaje, String tipo, String titulo){
+        JOptionPane optionPane = new JOptionPane(mensaje);
+        if(tipo.equals("Info")){
+            optionPane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+        }
+        else if(tipo.equals("Error")){
+            optionPane.setMessageType(JOptionPane.ERROR_MESSAGE);
+        }
+        JDialog dialog = optionPane.createDialog(titulo);
+        dialog.setAlwaysOnTop(true);
+        dialog.setVisible(true);      
     }
 
 

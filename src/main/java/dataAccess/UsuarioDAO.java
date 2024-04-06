@@ -1,7 +1,10 @@
 package dataAccess;
 
+import dataAccess.exceptions.NonexistentEntityException;
 import domain.UsuarioEntity;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import static java.util.random.RandomGeneratorFactory.all;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -39,8 +42,32 @@ public class UsuarioDAO implements IUsuarioDAO {
         return null;
     }
 
-    public UsuarioEntity update() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    @Override
+    public void update(UsuarioEntity usuarioEntity){
+        EntityManager em = null;
+        try {
+            em = getEntityManager();
+            em.getTransaction().begin();
+            usuarioEntity = em.merge(usuarioEntity);
+            em.getTransaction().commit();
+        } catch (Exception ex) {
+            String msg = ex.getLocalizedMessage();
+            if (msg == null || msg.length() == 0) {
+                int id = usuarioEntity.getId();
+                if (findUser(id) == null) {
+                    try {
+                        throw new NonexistentEntityException("The usuarioEntity with id " + id + " no longer exists.");
+                    } catch (NonexistentEntityException ex1) {
+                        Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex1);
+                    }
+                }
+            }
+            throw ex;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
     }
 
     @Override
@@ -65,10 +92,14 @@ public class UsuarioDAO implements IUsuarioDAO {
         }
     }
 
-    
-
-    
-
-
+    @Override
+    public UsuarioEntity findUser(Integer id) {
+        EntityManager em = getEntityManager();
+        try {
+            return em.find(UsuarioEntity.class, id);
+        } finally {
+            em.close();
+        }
+    }
     
 }
