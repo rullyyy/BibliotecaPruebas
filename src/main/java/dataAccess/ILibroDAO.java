@@ -19,4 +19,5 @@ public interface ILibroDAO {
     public String creaValoracion();
     public String actualizaValoracionExistente();
     public LibroEntity findLibroEntity(Long id);
+    public boolean existeLibro(LibroEntity libro);
 }

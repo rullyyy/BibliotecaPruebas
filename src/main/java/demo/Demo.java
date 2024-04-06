@@ -26,7 +26,7 @@ public class Demo {
      */
     public static void main(String[] args) {
 
-        UsuarioEntity user = new UsuarioEntity(); 
+        UsuarioEntity user = new UsuarioEntity();
         new LoginFrm().setVisible(true);
 
 //        BibliotecarioEntity b = new BibliotecarioEntity(1L, "Raul", "Luna", "99");

@@ -5,6 +5,7 @@
 package ui;
 
 import dataAccess.exceptions.NonexistentEntityException;
+import domain.BibliotecarioEntity;
 import domain.EstadoLibro;
 import domain.LibroEntity;
 import java.util.List;
@@ -195,10 +196,11 @@ public class GestionLibrosFrm extends javax.swing.JFrame {
                     EditarLibroFrm taskEditor = new EditarLibroFrm(libroAEditar);
 
                     taskEditor.setVisible(true);
+                    this.dispose();
                 } else {
                     JOptionPane.showMessageDialog(null, "Seleccione una tarea para editar");
                 }           
-        this.dispose();
+
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
@@ -215,7 +217,8 @@ public class GestionLibrosFrm extends javax.swing.JFrame {
                     DTOAgregarLibro libroDTO = new DTOAgregarLibro(libroAEliminar.getId(), libroAEliminar.getTitulo(), libroAEliminar.getAutor());
                     
              try {
-                 libroAEliminar.delete(libroDTO);
+                 BibliotecarioEntity bl = new BibliotecarioEntity();
+                 bl.eliminaLibro(libroDTO);
              } catch (NonexistentEntityException ex) {
                  Logger.getLogger(GestionLibrosFrm.class.getName()).log(Level.SEVERE, null, ex);
              }

@@ -17,6 +17,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.swing.JOptionPane;
 import ui.DTOAgregarLibro;
 
 /**
@@ -117,43 +118,30 @@ public class LibroEntity implements Serializable {
     
     /**
      * Método que manda a llamar al método create del acceso a datos
-     * @param DTOLibro 
+     * @param libro
+     * 
      * @return LibroEntity que fue persistida
      */
     
-    public LibroEntity create(DTOAgregarLibro DTOLibro){
-        return getDataAccessConnection().create(creaEntidadConDTO(DTOLibro));
+    public LibroEntity create(LibroEntity libro){
+        libro.setEstado(EstadoLibro.DISPONIBLE);
+        libro.setKeyword(generarKeyword(libro));
+        JOptionPane.showMessageDialog(null, "Se ha guardado el libro correctamente");
+        return getDataAccessConnection().create(libro);
+        
     }
     
-    public LibroEntity edit(DTOAgregarLibro DTOLibro){
-        LibroEntity libroExistente = buscarLibroPorId(DTOLibro);
-        
-        libroExistente.setTitulo(DTOLibro.getTitulo());
-        libroExistente.setAutor(DTOLibro.getAutor());
-        libroExistente.setKeyword(generarKeyword(libroExistente));
+    public LibroEntity edit(LibroEntity libroExistente){
+        generarKeyword(libroExistente);
+        JOptionPane.showMessageDialog(null, "Se ha editado el libro correctamente");
         return getDataAccessConnection().update(libroExistente);
     }
     
-    public Long delete(DTOAgregarLibro DTOlibro) throws NonexistentEntityException{
-         LibroEntity libroExistente = buscarLibroPorId(DTOlibro);
-        
-        libroExistente.setId(DTOlibro.getId());
-        libroExistente.setTitulo(DTOlibro.getTitulo());
-        libroExistente.setAutor(DTOlibro.getAutor());
-        return getDataAccessConnection().delete(libroExistente.getId());
+    public Long delete(LibroEntity libroAEliminar) throws NonexistentEntityException{
+
+        return getDataAccessConnection().delete(libroAEliminar.getId());
     }
-    /**
-     * Método para obtener una instancia de LibroEntity con un DTO
-     * @param DTOLibro DTO con los datos para registrar al libro
-     * @return LibroEntity con los valores requeridos según el DTOLibro
-     */
-    
-    public LibroEntity creaEntidadConDTO(DTOAgregarLibro DTOLibro)
-    {
-        LibroEntity libro = new LibroEntity(DTOLibro.getTitulo(), DTOLibro.getAutor(),EstadoLibro.DISPONIBLE);
-        libro.setKeyword(generarKeyword(libro));
-        return libro;
-    }
+  
     /**
      * Método para obtener la interfaz del acceso a datos.
      * @return Instancia de LibroDAO
@@ -207,8 +195,7 @@ public class LibroEntity implements Serializable {
      }
      
      public LibroEntity buscarLibroPorId(DTOAgregarLibro libro){
-         
-         ILibroDAO libroDAO = new LibroDAO();
-         return libroDAO.findLibroEntity(libro.getId());
+
+         return getDataAccessConnection().findLibroEntity(libro.getId());
 }
 }

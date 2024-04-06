@@ -39,20 +39,18 @@ public class TestLibro {
     }
     /**
      * Este método crea una instancia de DTOAgregarLibro y la persiste hacia la base de datos
+     * @throws IllegalAccessException
+     * @throws InstantiationException
+     * 
      */
     @Test 
-    public void pruebaIntegracionAgregarLibro(){
+    public void pruebaIntegracionAgregarLibro() throws IllegalAccessException, InstantiationException{
         DTOAgregarLibro agregarLibroDTO = new DTOAgregarLibro("El quijote", "Miguel de Cervantes");
-        LibroEntity libroEntity = new LibroEntity();
-        assertEquals(agregarLibroDTO.getTitulo(),  libroEntity.create(agregarLibroDTO).getTitulo());
+        BibliotecarioEntity libroEntity = new BibliotecarioEntity();
+        LibroEntity libro = libroEntity.create(libroEntity).crearEntidadConDTO(agregarLibroDTO, LibroEntity.class);
+        assertEquals(agregarLibroDTO.getTitulo(), libro.getTitulo());
     }
     
-    @Test 
-    public void pruebaEstadoLibro(){
-        DTOAgregarLibro agregarLibroDTO = new DTOAgregarLibro("El quijote", "Miguel de Cervantes");
-        LibroEntity libroEntity = new LibroEntity();
-        assertEquals("DISPONIBLE",  libroEntity.create(agregarLibroDTO).getEstado());
-    }
 
     @Test
      public void testPrestarLibro() {

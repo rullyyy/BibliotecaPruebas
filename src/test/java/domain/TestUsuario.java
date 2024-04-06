@@ -22,7 +22,7 @@ public class TestUsuario{
      */
     public void testGetDataAccessConnection(){
         IUsuarioDAO mockIUsuarioDAO = mock(IUsuarioDAO.class);
-        UsuarioEntity usuarioEntity = new UsuarioEntity("luis", "contreras", new Date(), "COPL030607HSRNRSA9");
+        UsuarioEntity usuarioEntity = new UsuarioEntity("luis", "contreras", new Date(), "COPL030607HSRNRSA9", "235765");
         UsuarioEntity usuarioAccess = new UsuarioEntity();
         when(usuarioEntity.getDataAccessConnection()).thenReturn(mockIUsuarioDAO);
         assertEquals(usuarioAccess.getDataAccessConnection(), mockIUsuarioDAO);

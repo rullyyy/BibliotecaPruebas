@@ -6,12 +6,17 @@ package domain;
 
 import dataAccess.BibliotecarioDAO;
 import dataAccess.IBibliotecarioDAO;
+import dataAccess.exceptions.NonexistentEntityException;
 import java.io.Serializable;
+import java.lang.reflect.Field;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.swing.JOptionPane;
+import ui.DTOAgregarLibro;
+import ui.DTOAgregarUsuario;
 import ui.DTOLogin;
 
 /**
@@ -133,6 +138,73 @@ public class BibliotecarioEntity implements Serializable {
         }
 
     }
+  
+    
+    public <T> T crearEntidadConDTO(Object dto, Class<T> entityClass) throws IllegalAccessException, InstantiationException {
+        T entidad = entityClass.newInstance();
+        Field[] camposDTO = dto.getClass().getDeclaredFields();
+        Field[] camposEntidad = entityClass.getDeclaredFields();
 
+        for (Field campoDTO : camposDTO) {
+            campoDTO.setAccessible(true);
+            for (Field campoEntidad : camposEntidad) {
+                campoEntidad.setAccessible(true);
+                if (campoEntidad.getName().equals(campoDTO.getName())) {
+                    campoEntidad.set(entidad, campoDTO.get(dto));
+                    break;
+                }
+            }
+        }
+
+        return entidad;
+    }
+    public UsuarioEntity registraUsuario(DTOAgregarUsuario usuarioDTO){
+        
+        return null;
+        
+    }
+    
+    public LibroEntity registraLibro(DTOAgregarLibro libroDTO) throws IllegalAccessException, InstantiationException{
+       LibroEntity libro = crearEntidadConDTO(libroDTO, LibroEntity.class);
+        if(libro.getDataAccessConnection().existeLibro(libro) == false){
+            return libro.create(libro);
+        }else{
+            JOptionPane.showMessageDialog(null, "Error: Libro Existente");
+        }
+        return null;
+  
+    }
+    
+    public LibroEntity editaLibro(DTOAgregarLibro libroDTO) throws IllegalAccessException, InstantiationException{
+        LibroEntity lb = new LibroEntity();
+        
+        LibroEntity libroExistente = lb.buscarLibroPorId(libroDTO);
+        
+        libroExistente.setTitulo(libroDTO.getTitulo());
+        libroExistente.setAutor(libroDTO.getAutor());
+         
+        if(libroExistente.getDataAccessConnection().existeLibro(libroExistente)== false){
+            return libroExistente.edit(libroExistente);
+        }else{
+            JOptionPane.showMessageDialog(null, "Error: Ha ingresado datos de un libro ya existente");
+        }
+        return null;
+        
+    }
+    
+    public Long eliminaLibro(DTOAgregarLibro DTOlibro)throws NonexistentEntityException{
+        LibroEntity lb = new LibroEntity();
+        LibroEntity libroExistente = lb.buscarLibroPorId(DTOlibro);
+        
+        libroExistente.setId(DTOlibro.getId());
+        libroExistente.setTitulo(DTOlibro.getTitulo());
+        libroExistente.setAutor(DTOlibro.getAutor());
+        return libroExistente.delete(libroExistente);
+        
+        
+        
+    }
+
+   
 
 }

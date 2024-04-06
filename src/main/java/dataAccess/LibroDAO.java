@@ -11,6 +11,8 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
 
@@ -18,14 +20,22 @@ import javax.persistence.criteria.CriteriaQuery;
  *
  * @author xfs85
  */
+
 public class LibroDAO implements ILibroDAO {
 
+ 
+    private EntityManager entityManager;
     private EntityManagerFactory emf = ConnectorSQL.getEntityManagerFactory();
 
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
 
+    public LibroDAO() {
+        this.entityManager = emf.createEntityManager();
+    }
+
+    
     @Override
     public LibroEntity create(LibroEntity libro) {
         EntityManager em = null;
@@ -150,6 +160,26 @@ public class LibroDAO implements ILibroDAO {
     @Override
     public LibroEntity read() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    
+     /**
+     * Verifica si un libro ya existe en la base de datos.
+     * 
+     * @param libro El libro a verificar.
+     * @return true si el libro ya existe, false si no existe.
+     */
+    public boolean existeLibro(LibroEntity libro) {
+        String jpql = "SELECT COUNT(l) FROM LibroEntity l WHERE l.titulo = :titulo AND l.autor = :autor";
+        Query query = entityManager.createQuery(jpql);
+        query.setParameter("titulo", libro.getTitulo());
+        query.setParameter("autor", libro.getAutor());
+
+        try {
+            long count = (long) query.getSingleResult();
+            return count > 0;
+        } catch (NoResultException e) {
+            return false;
+        }
     }
 
     

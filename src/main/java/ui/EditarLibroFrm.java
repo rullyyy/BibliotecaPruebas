@@ -4,6 +4,7 @@
  */
 package ui;
 
+import domain.BibliotecarioEntity;
 import domain.LibroEntity;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -98,11 +99,17 @@ public class EditarLibroFrm extends javax.swing.JFrame {
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
     if(validaCamposVacios() == true){
-        LibroEntity libroAccess = new LibroEntity();
+        BibliotecarioEntity libroAccess = new BibliotecarioEntity();
         DTOAgregarLibro agregarLibroDTO = new DTOAgregarLibro(Long.valueOf(this.txtID.getText()), this.txtTitulo.getText(), this.txtAutor.getText());
-        libroAccess.edit(agregarLibroDTO);
+        try {
+            libroAccess.editaLibro(agregarLibroDTO);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(EditarLibroFrm.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(EditarLibroFrm.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
-        JOptionPane.showMessageDialog(null, "Se ha editado el libro correctamente");
+        
         this.dispose();
         new GestionLibrosFrm().setVisible(true);
       }else{
