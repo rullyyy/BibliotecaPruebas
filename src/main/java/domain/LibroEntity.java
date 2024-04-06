@@ -9,6 +9,7 @@ import dataAccess.LibroDAO;
 import dataAccess.exceptions.NonexistentEntityException;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Locale;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -40,10 +41,10 @@ public class LibroEntity implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name="estado")
     private EstadoLibro estado;
-//
-//    @Column(name="keyword")
-//    private String keyword;
-//    
+
+    @Column(name="keyword")
+    private String[] keyword;
+    
     
     public LibroEntity() {
     }
@@ -62,6 +63,15 @@ public class LibroEntity implements Serializable {
         this.estado = estado;
     }
 
+    public LibroEntity(Long id, String titulo, String autor, EstadoLibro estado, String[] keyword) {
+        this.id = id;
+        this.titulo = titulo;
+        this.autor = autor;
+        this.estado = estado;
+        this.keyword = keyword;
+    }
+
+    
     
     public Long getId() {
         return id;
@@ -95,15 +105,15 @@ public class LibroEntity implements Serializable {
         this.estado = estado;
     }
     
-//    
-//    public String getKeyword() {
-//        return keyword;
-//    }
-//
-//    public void setKeyword(String keyword) {
-//        this.keyword = keyword;
-//    }
-//    
+    
+    public String[] getKeyword() {
+        return keyword;
+    }
+
+    public void setKeyword(String[] keyword) {
+        this.keyword = keyword;
+    }
+    
     
     /**
      * Método que manda a llamar al método create del acceso a datos
@@ -120,6 +130,7 @@ public class LibroEntity implements Serializable {
         
         libroExistente.setTitulo(DTOLibro.getTitulo());
         libroExistente.setAutor(DTOLibro.getAutor());
+        libroExistente.setKeyword(generarKeyword(libroExistente));
         return getDataAccessConnection().update(libroExistente);
     }
     
@@ -140,6 +151,7 @@ public class LibroEntity implements Serializable {
     public LibroEntity creaEntidadConDTO(DTOAgregarLibro DTOLibro)
     {
         LibroEntity libro = new LibroEntity(DTOLibro.getTitulo(), DTOLibro.getAutor(),EstadoLibro.DISPONIBLE);
+        libro.setKeyword(generarKeyword(libro));
         return libro;
     }
     /**
@@ -157,7 +169,42 @@ public class LibroEntity implements Serializable {
         return libroDAO.findLibroEntityEntities();
      }
      
-     
+     public String[] generarKeyword(LibroEntity libro){
+      
+        String[] words = libro.getTitulo().toLowerCase(Locale.ROOT).split("\\s+");
+        
+        String[] keywords = new String[5];
+        
+        // Opción 1: Combinar todas las palabras del título
+        StringBuilder keywordBuilder1 = new StringBuilder();
+        for (String word : words) {
+            keywordBuilder1.append(word);
+        }
+        keywords[0] = keywordBuilder1.toString();
+        
+        // Opción 2: Primeras tres letras de cada palabra del título
+        StringBuilder keywordBuilder2 = new StringBuilder();
+        for (String word : words) {
+            keywordBuilder2.append(word.substring(0, Math.min(word.length(), 3)));
+        }
+        keywords[1] = keywordBuilder2.toString();
+        
+        // Opción 3: Solo la primera palabra del título
+        keywords[2] = words[0];
+        
+        // Opción 4: Solo la última palabra del título
+        keywords[3] = words[words.length - 1];
+        
+        // Opción 5: Usar el título completo pero sin espacios
+        keywords[4] = libro.getTitulo().replaceAll("\\s+", "");
+        
+          for (String keyword : keywords) {
+            System.out.println(keyword);
+        }
+        // Retornar el array de keywords generados
+        return keywords;
+        
+     }
      
      public LibroEntity buscarLibroPorId(DTOAgregarLibro libro){
          
