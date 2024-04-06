@@ -107,7 +107,7 @@ public class AgregarUsuarioFrm extends javax.swing.JFrame {
             UsuarioEntity usuarioAccess = new UsuarioEntity();
             
             DTOAgregarUsuario agregarUsuarioDTO = new DTOAgregarUsuario(txtNombre.getText(), txtApellido.getText(),
-                    txtFecha.getDate(), txtMatricula.getText(), txtCurp.getText());
+                    txtFecha.getDate(), txtCurp.getText(), txtMatricula.getText());
             
             usuarioAccess.create(agregarUsuarioDTO);
             JOptionPane.showMessageDialog(null, "Se ha guardado el usuario correctamente");
