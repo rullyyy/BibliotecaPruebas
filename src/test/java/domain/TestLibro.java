@@ -6,6 +6,7 @@ package domain;
 import static org.junit.jupiter.api.Assertions.*;
 import dataAccess.ILibroDAO;
 import dataAccess.LibroDAO;
+import dataAccess.exceptions.NonexistentEntityException;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import static org.mockito.Mockito.*;
@@ -71,5 +72,21 @@ public class TestLibro {
          LibroDAO ldao = new LibroDAO();
          List<LibroEntity> libros = ldao.findLibroEntityEntities();
          assertFalse(libros.isEmpty());
+     }
+     
+     @Test
+     public void editarLibro(){
+        ILibroDAO mockILibroDAO = mock(ILibroDAO.class);
+        LibroEntity libro = new LibroEntity();
+        when(mockILibroDAO.update(libro)).thenReturn(libro);
+        assertEquals(mockILibroDAO.update(libro), libro);
+     }
+     
+      @Test
+     public void eliminarLibro() throws NonexistentEntityException{
+        ILibroDAO mockILibroDAO = mock(ILibroDAO.class);
+        LibroEntity libro = new LibroEntity();
+        when(mockILibroDAO.delete(libro.getId())).thenReturn(null);
+        assertEquals(mockILibroDAO.delete(libro.getId()), null);
      }
 }

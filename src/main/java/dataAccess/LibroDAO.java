@@ -4,11 +4,13 @@
  */
 package dataAccess;
 
+import dataAccess.exceptions.NonexistentEntityException;
 import domain.LibroEntity;
 import domain.UsuarioEntity;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
 
@@ -24,6 +26,7 @@ public class LibroDAO implements ILibroDAO {
         return emf.createEntityManager();
     }
 
+    @Override
     public LibroEntity create(LibroEntity libro) {
         EntityManager em = null;
         try {
@@ -60,8 +63,6 @@ public class LibroDAO implements ILibroDAO {
         }
     }
 
-    
-
     @Override
     public String creaValoracion() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -72,50 +73,29 @@ public class LibroDAO implements ILibroDAO {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-//    public void edit(LibroEntity libroEntity) throws NonexistentEntityException, Exception {
-//        EntityManager em = null;
-//        try {
-//            em = getEntityManager();
-//            em.getTransaction().begin();
-//            libroEntity = em.merge(libroEntity);
-//            em.getTransaction().commit();
-//        } catch (Exception ex) {
-//            String msg = ex.getLocalizedMessage();
-//            if (msg == null || msg.length() == 0) {
-//                Long id = libroEntity.getId();
-//                if (findLibroEntity(id) == null) {
-//                    throw new NonexistentEntityException("The libroEntity with id " + id + " no longer exists.");
-//                }
-//            }
-//            throw ex;
-//        } finally {
-//            if (em != null) {
-//                em.close();
-//            }
-//        }
-//    }
-//
-//    public void destroy(Long id) throws NonexistentEntityException {
-//        EntityManager em = null;
-//        try {
-//            em = getEntityManager();
-//            em.getTransaction().begin();
-//            LibroEntity libroEntity;
-//            try {
-//                libroEntity = em.getReference(LibroEntity.class, id);
-//                libroEntity.getId();
-//            } catch (EntityNotFoundException enfe) {
-//                throw new NonexistentEntityException("The libroEntity with id " + id + " no longer exists.", enfe);
-//            }
-//            em.remove(libroEntity);
-//            em.getTransaction().commit();
-//        } finally {
-//            if (em != null) {
-//                em.close();
-//            }
-//        }
-//    }
-//
+    @Override
+    public Long delete(Long id) throws NonexistentEntityException {
+        EntityManager em = null;
+        try {
+            em = getEntityManager();
+            em.getTransaction().begin();
+            LibroEntity libroEntity;
+            try {
+                libroEntity = em.getReference(LibroEntity.class, id);
+                libroEntity.getId();
+            } catch (EntityNotFoundException enfe) {
+                throw new NonexistentEntityException("The libroEntity with id " + id + " no longer exists.", enfe);
+            }
+            em.remove(libroEntity);
+            em.getTransaction().commit();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+        return null;
+    }
+
     public List<LibroEntity> findLibroEntityEntities() {
         return findLibroEntityEntities(true, -1, -1);
     }
@@ -139,16 +119,17 @@ public class LibroDAO implements ILibroDAO {
             em.close();
         }
     }
-//
-//    public LibroEntity findLibroEntity(Long id) {
-//        EntityManager em = getEntityManager();
-//        try {
-//            return em.find(LibroEntity.class, id);
-//        } finally {
-//            em.close();
-//        }
-//    }
-//
+
+    @Override
+    public LibroEntity findLibroEntity(Long id) {
+        EntityManager em = getEntityManager();
+        try {
+            return em.find(LibroEntity.class, id);
+        } finally {
+            em.close();
+        }
+    }
+
 //    public int getLibroEntityCount() {
 //        EntityManager em = getEntityManager();
 //        try {
@@ -166,15 +147,11 @@ public class LibroDAO implements ILibroDAO {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-
     @Override
     public LibroEntity read() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    @Override
-    public LibroEntity delete() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    
 
 }

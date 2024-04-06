@@ -4,8 +4,8 @@
  */
 package dataAccess;
 
+import dataAccess.exceptions.NonexistentEntityException;
 import domain.LibroEntity;
-import domain.UsuarioEntity;
 
 /**
  *
@@ -15,7 +15,8 @@ public interface ILibroDAO {
     public LibroEntity create(LibroEntity libro);
     public LibroEntity update(LibroEntity libro);
     public LibroEntity read();
-    public LibroEntity delete();
+    public Long delete(Long id) throws NonexistentEntityException ;
     public String creaValoracion();
     public String actualizaValoracionExistente();
+    public LibroEntity findLibroEntity(Long id);
 }

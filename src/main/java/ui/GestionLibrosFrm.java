@@ -4,8 +4,13 @@
  */
 package ui;
 
+import dataAccess.exceptions.NonexistentEntityException;
+import domain.EstadoLibro;
 import domain.LibroEntity;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
@@ -85,6 +90,8 @@ public class GestionLibrosFrm extends javax.swing.JFrame {
         btnAgregar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         librosTable = new javax.swing.JTable();
+        btnEditar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -125,6 +132,24 @@ public class GestionLibrosFrm extends javax.swing.JFrame {
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 100, 350, 350));
 
+        btnEditar.setBorder(null);
+        btnEditar.setContentAreaFilled(false);
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(522, 266, 105, 37));
+
+        btnEliminar.setBorder(null);
+        btnEliminar.setContentAreaFilled(false);
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 339, 110, 35));
+
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GestionLibros.png"))); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -153,9 +178,62 @@ public class GestionLibrosFrm extends javax.swing.JFrame {
        new AgregaLibroFrm().setVisible(true);
     }//GEN-LAST:event_btnAgregarActionPerformed
 
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+          int selectedRow = librosTable.getSelectedRow();
+
+                if (selectedRow != -1) {
+                    LibroEntity libroAEditar= new LibroEntity();
+                    
+                    libroAEditar.setId((Long) librosTable.getValueAt(selectedRow, 0));
+                    libroAEditar.setTitulo(String.valueOf(librosTable.getValueAt(selectedRow, 1))); 
+                    libroAEditar.setAutor(String.valueOf(librosTable.getValueAt(selectedRow, 2)));
+                    libroAEditar.setEstado((EstadoLibro) librosTable.getValueAt(selectedRow, 3));
+                    
+                    
+                  
+                    
+                    EditarLibroFrm taskEditor = new EditarLibroFrm(libroAEditar);
+
+                    taskEditor.setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Seleccione una tarea para editar");
+                }           
+        this.dispose();
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+         int selectedRow = librosTable.getSelectedRow();
+
+                if (selectedRow != -1) {
+                    LibroEntity libroAEliminar= new LibroEntity();
+                    
+                    libroAEliminar.setId((Long) librosTable.getValueAt(selectedRow, 0));
+                    libroAEliminar.setTitulo(String.valueOf(librosTable.getValueAt(selectedRow, 1))); 
+                    libroAEliminar.setAutor(String.valueOf(librosTable.getValueAt(selectedRow, 2)));
+                    libroAEliminar.setEstado((EstadoLibro) librosTable.getValueAt(selectedRow, 3));
+                    
+                    DTOAgregarLibro libroDTO = new DTOAgregarLibro(libroAEliminar.getId(), libroAEliminar.getTitulo(), libroAEliminar.getAutor());
+                    
+             try {
+                 libroAEliminar.delete(libroDTO);
+             } catch (NonexistentEntityException ex) {
+                 Logger.getLogger(GestionLibrosFrm.class.getName()).log(Level.SEVERE, null, ex);
+             }
+                    JOptionPane.showMessageDialog(null, "Se ha eliminado el libro correctamente");
+                    this.dispose();
+                    new GestionLibrosFrm().setVisible(true);
+                    
+                    
+                } else {
+                    JOptionPane.showMessageDialog(null, "Seleccione una tarea para eliminar");
+                }  
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
+    private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnVolver;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;

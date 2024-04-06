@@ -6,6 +6,7 @@ package domain;
 
 import dataAccess.ILibroDAO;
 import dataAccess.LibroDAO;
+import dataAccess.exceptions.NonexistentEntityException;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Column;
@@ -113,6 +114,23 @@ public class LibroEntity implements Serializable {
     public LibroEntity create(DTOAgregarLibro DTOLibro){
         return getDataAccessConnection().create(creaEntidadConDTO(DTOLibro));
     }
+    
+    public LibroEntity edit(DTOAgregarLibro DTOLibro){
+        LibroEntity libroExistente = buscarLibroPorId(DTOLibro);
+        
+        libroExistente.setTitulo(DTOLibro.getTitulo());
+        libroExistente.setAutor(DTOLibro.getAutor());
+        return getDataAccessConnection().update(libroExistente);
+    }
+    
+    public Long delete(DTOAgregarLibro DTOlibro) throws NonexistentEntityException{
+         LibroEntity libroExistente = buscarLibroPorId(DTOlibro);
+        
+        libroExistente.setId(DTOlibro.getId());
+        libroExistente.setTitulo(DTOlibro.getTitulo());
+        libroExistente.setAutor(DTOlibro.getAutor());
+        return getDataAccessConnection().delete(libroExistente.getId());
+    }
     /**
      * Método para obtener una instancia de LibroEntity con un DTO
      * @param DTOLibro DTO con los datos para registrar al libro
@@ -138,4 +156,12 @@ public class LibroEntity implements Serializable {
          LibroDAO libroDAO = new LibroDAO();
         return libroDAO.findLibroEntityEntities();
      }
+     
+     
+     
+     public LibroEntity buscarLibroPorId(DTOAgregarLibro libro){
+         
+         ILibroDAO libroDAO = new LibroDAO();
+         return libroDAO.findLibroEntity(libro.getId());
+}
 }

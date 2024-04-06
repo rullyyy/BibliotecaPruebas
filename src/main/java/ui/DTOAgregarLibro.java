@@ -10,16 +10,32 @@ package ui;
  * @author luisp
  */
 public class DTOAgregarLibro {
+    private Long id;
     private String titulo;
     private String autor;
+    
     public DTOAgregarLibro() 
     {
         
     }
 
+    public DTOAgregarLibro(Long id, String titulo, String autor) {
+        this.id = id;
+        this.titulo = titulo;
+        this.autor = autor;
+    }
+    
     public DTOAgregarLibro(String titulo, String autor) {
         this.titulo = titulo;
         this.autor = autor;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getTitulo() {
