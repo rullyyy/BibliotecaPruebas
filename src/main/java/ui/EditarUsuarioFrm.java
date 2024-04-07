@@ -5,10 +5,13 @@
 package ui;
 
 import dataAccess.UsuarioDAO;
+import domain.BibliotecarioEntity;
 import domain.UsuarioEntity;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -196,7 +199,19 @@ public class EditarUsuarioFrm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+            if(validaCamposVacios() == true){
+        BibliotecarioEntity libroAccess = new BibliotecarioEntity();
+        DTOAgregarUsuario usuarioDTO = new DTOAgregarUsuario(this.usu.getId(),this.txtNombre.getText(), this.txtApellido.getText(), this.txtFecha.getDate(), this.txtCurp.getText(), this.txtMatricula.getText());
+         libroAccess.editaUsuario(usuarioDTO);
+      
+
         
+        this.dispose();
+        new GestionUsuariosFrm().setVisible(true);
+      }else{
+          JOptionPane.showMessageDialog(null, "Campos vacíos o invalidos, ingrese nuevamente");
+      }
+    
     }//GEN-LAST:event_btnGuardarActionPerformed
 
 
@@ -220,15 +235,23 @@ public class EditarUsuarioFrm extends javax.swing.JFrame {
     private void cargarDatos(int id){
         this.usu = usuDAO.findUser(id);
         
-        //LocalDate fNac = usu.getFechaNacimiento().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate fNac = usu.getFechaNacimiento().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         
         txtNombre.setText(usu.getNombre());
         txtApellido.setText(usu.getApellidos());
-        //txtFecha.setDate(fNac);
+        txtFecha.setDate(fNac);
         txtCurp.setText(usu.getCurp());
         txtMatricula.setText(usu.getMatricula());
     }
     
+       private boolean validaCamposVacios(){
+        if(txtNombre.getText().isBlank() || txtApellido.getText().isBlank() || txtFecha.getText().isBlank()
+                || txtCurp.getText().isBlank() || txtMatricula.getText().isBlank()){
+            return false;
+        }
+        return true;
+    }
+       
     public void mostrarMensaje(String mensaje, String tipo, String titulo) {
         JOptionPane optionPane = new JOptionPane(mensaje);
         if (tipo.equals("Info")) {

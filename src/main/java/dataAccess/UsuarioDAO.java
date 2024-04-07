@@ -8,17 +8,24 @@ import java.util.logging.Logger;
 import static java.util.random.RandomGeneratorFactory.all;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
 
 public class UsuarioDAO implements IUsuarioDAO {
 
+    private EntityManager em;
     private EntityManagerFactory emf = ConnectorSQL.getEntityManagerFactory();
 
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
 
+    public UsuarioDAO() {
+        this.em = emf.createEntityManager();
+    }
+
+    
     @Override
     public UsuarioEntity create(UsuarioEntity usuarioModel) {
         EntityManager em = null;
@@ -43,13 +50,14 @@ public class UsuarioDAO implements IUsuarioDAO {
     }
 
     @Override
-    public void update(UsuarioEntity usuarioEntity){
+    public UsuarioEntity update(UsuarioEntity usuarioEntity){
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
             usuarioEntity = em.merge(usuarioEntity);
             em.getTransaction().commit();
+            return usuarioEntity;
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
@@ -68,6 +76,7 @@ public class UsuarioDAO implements IUsuarioDAO {
                 em.close();
             }
         }
+        
     }
 
     @Override
@@ -102,4 +111,17 @@ public class UsuarioDAO implements IUsuarioDAO {
         }
     }
     
+     public boolean existeUsuario(UsuarioEntity usuario) {
+        String jpql = "SELECT COUNT(l) FROM UsuarioEntity l WHERE l.curp = :curp AND l.matricula = :matricula";
+        Query query = em.createQuery(jpql);
+        query.setParameter("curp", usuario.getCurp());
+        query.setParameter("matricula", usuario.getMatricula());
+
+        try {
+            long count = (long) query.getSingleResult();
+            return count > 0;
+        } catch (NoResultException e) {
+            return false;
+        }
+    }
 }

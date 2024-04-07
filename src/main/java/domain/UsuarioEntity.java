@@ -21,6 +21,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.swing.JOptionPane;
 import ui.DTOAgregarUsuario;
 import ui.DTOLogin;
 
@@ -141,6 +142,11 @@ public class UsuarioEntity implements Serializable {
 
         return getDataAccessConnection().create(crearEntidadConDTO(usuario));
     }
+    
+    public UsuarioEntity edit(UsuarioEntity usuarioExistente){
+    JOptionPane.showMessageDialog(null, "Se ha editado el usuario correctamente");
+    return getDataAccessConnection().update(usuarioExistente);
+}
     
     public UsuarioEntity crearEntidadConDTO(DTOAgregarUsuario DTOUsuario){
         LocalDate localDate = DTOUsuario.getFechaNacimiento();

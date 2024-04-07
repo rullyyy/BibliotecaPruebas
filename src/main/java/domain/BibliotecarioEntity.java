@@ -9,6 +9,9 @@ import dataAccess.IBibliotecarioDAO;
 import dataAccess.exceptions.NonexistentEntityException;
 import java.io.Serializable;
 import java.lang.reflect.Field;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -164,6 +167,27 @@ public class BibliotecarioEntity implements Serializable {
         
     }
     
+    public UsuarioEntity editaUsuario(DTOAgregarUsuario usuarioDTO){
+        
+        UsuarioEntity ue = new UsuarioEntity();
+        UsuarioEntity usuarioExistente = ue.findUser(usuarioDTO.getId());
+         LocalDate localDate = usuarioDTO.getFechaNacimiento();
+        Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        
+        usuarioExistente.setNombre(usuarioDTO.getNombre());
+        usuarioExistente.setApellidos(usuarioDTO.getApellido());
+        usuarioExistente.setFechaNacimiento(date);
+        usuarioExistente.setCurp(usuarioDTO.getCurp());
+        usuarioExistente.setMatricula(usuarioDTO.getMatricula());
+        
+        if(usuarioExistente.getDataAccessConnection().existeUsuario(usuarioExistente) == false){
+            return usuarioExistente.edit(usuarioExistente);
+        }else{
+            JOptionPane.showMessageDialog(null, "Error: Ha ingresado datos de un usuario ya existente (CURP o Matricula)");
+        }
+        return null;
+    }
+    
     public LibroEntity registraLibro(DTOAgregarLibro libroDTO) throws IllegalAccessException, InstantiationException{
        LibroEntity libro = crearEntidadConDTO(libroDTO, LibroEntity.class);
         if(libro.getDataAccessConnection().existeLibro(libro) == false){
@@ -200,10 +224,10 @@ public class BibliotecarioEntity implements Serializable {
         libroExistente.setTitulo(DTOlibro.getTitulo());
         libroExistente.setAutor(DTOlibro.getAutor());
         return libroExistente.delete(libroExistente);
-        
-        
-        
+   
     }
+    
+    
 
    
 

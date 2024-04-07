@@ -12,6 +12,7 @@ import java.time.LocalDate;
  * @author PC
  */
 public class DTOAgregarUsuario {
+    private int id;
     private String nombre;
     private String apellido;
     private LocalDate fechaNacimiento;
@@ -23,6 +24,15 @@ public class DTOAgregarUsuario {
     
     }
 
+    public DTOAgregarUsuario(int id, String nombre, String apellido, LocalDate fechaNacimiento, String curp, String matricula) {
+        this.id = id;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.fechaNacimiento = fechaNacimiento;
+        this.curp = curp;
+        this.matricula = matricula;
+    }
+
     public DTOAgregarUsuario(String nombre, String apellido, LocalDate fechaNacimiento, String curp, String matricula) {
         this.nombre = nombre;
         this.apellido = apellido;
@@ -31,6 +41,15 @@ public class DTOAgregarUsuario {
         this.matricula = matricula;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    
     public String getNombre() {
         return nombre;
     }
