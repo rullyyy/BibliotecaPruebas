@@ -6,6 +6,7 @@ package dataAccess;
 
 import dataAccess.exceptions.NonexistentEntityException;
 import domain.LibroEntity;
+import java.util.List;
 
 /**
  *
@@ -20,4 +21,5 @@ public interface ILibroDAO {
     public String actualizaValoracionExistente();
     public LibroEntity findLibroEntity(Long id);
     public boolean existeLibro(LibroEntity libro);
+    public List<LibroEntity> findLibroEntityEntities(boolean all, int maxResults, int firstResult);
 }

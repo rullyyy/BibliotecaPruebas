@@ -114,7 +114,8 @@ public class LibroDAO implements ILibroDAO {
         return findLibroEntityEntities(false, maxResults, firstResult);
     }
 
-    private List<LibroEntity> findLibroEntityEntities(boolean all, int maxResults, int firstResult) {
+    @Override
+    public List<LibroEntity> findLibroEntityEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();

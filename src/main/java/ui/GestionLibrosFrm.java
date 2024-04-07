@@ -8,6 +8,7 @@ import dataAccess.exceptions.NonexistentEntityException;
 import domain.BibliotecarioEntity;
 import domain.EstadoLibro;
 import domain.LibroEntity;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,6 +28,7 @@ public class GestionLibrosFrm extends javax.swing.JFrame {
     List<LibroEntity> libros;
     DefaultTableModel tableModelBooks = new DefaultTableModel();
     LibroEntity libroModel = new LibroEntity();
+    private List<LibroEntity> listaTabla;
     
     public GestionLibrosFrm() {
         initComponents();
@@ -93,6 +95,8 @@ public class GestionLibrosFrm extends javax.swing.JFrame {
         librosTable = new javax.swing.JTable();
         btnEditar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        txtLibro = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -131,7 +135,7 @@ public class GestionLibrosFrm extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(librosTable);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 100, 350, 350));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 110, 350, 350));
 
         btnEditar.setBorder(null);
         btnEditar.setContentAreaFilled(false);
@@ -150,6 +154,18 @@ public class GestionLibrosFrm extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 339, 110, 35));
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Titulo del Libro:");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 80, 140, 20));
+
+        txtLibro.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtLibroKeyReleased(evt);
+            }
+        });
+        jPanel1.add(txtLibro, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 80, 210, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GestionLibros.png"))); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -232,6 +248,10 @@ public class GestionLibrosFrm extends javax.swing.JFrame {
                 }  
     }//GEN-LAST:event_btnEliminarActionPerformed
 
+    private void txtLibroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtLibroKeyReleased
+        cargarTablaLibros();
+    }//GEN-LAST:event_txtLibroKeyReleased
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
@@ -239,8 +259,41 @@ public class GestionLibrosFrm extends javax.swing.JFrame {
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnVolver;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable librosTable;
+    private javax.swing.JTextField txtLibro;
     // End of variables declaration//GEN-END:variables
+
+
+    private void cargarTablaLibros(){
+        DefaultTableModel tabla = (DefaultTableModel) librosTable.getModel();
+        
+        String titulos[] = {"ID", "Titulo", "Autor", "Estado"};
+        tabla.setColumnIdentifiers(titulos);
+        
+        listaTabla = libroModel.findLibroEntityEntities();
+        List<LibroEntity> aux = new ArrayList<>();
+        
+        if(listaTabla != null){
+            if(!txtLibro.getText().equalsIgnoreCase("")){
+                for(LibroEntity lib : listaTabla){
+                    String titulo = lib.getTitulo();
+                    
+                    if(titulo.toUpperCase().contains(txtLibro.getText().toUpperCase())){
+                        aux.add(lib);
+                    }
+                }
+                listaTabla = aux;
+            }
+            tabla.setRowCount(0);
+            for(LibroEntity lib : listaTabla){
+                Object[] objeto = {lib.getId(), lib.getTitulo(), lib.getAutor(), lib.getEstado()};
+                tabla.addRow(objeto);
+            }
+            librosTable.setModel(tabla);
+        }
+    }
+
 }

@@ -5,6 +5,7 @@
 package ui;
 
 import domain.UsuarioEntity;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
@@ -43,6 +44,8 @@ public class GestionUsuariosFrm extends javax.swing.JFrame {
         btnAgregarUsuario = new javax.swing.JButton();
         btnEditarUsuario = new javax.swing.JButton();
         btnRegresar = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        txtBusqueda = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -112,6 +115,18 @@ public class GestionUsuariosFrm extends javax.swing.JFrame {
         btnRegresar.setContentAreaFilled(false);
         jPanel1.add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 40, 20));
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Matricula del Usuario:");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 80, 200, 20));
+
+        txtBusqueda.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtBusquedaKeyReleased(evt);
+            }
+        });
+        jPanel1.add(txtBusqueda, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 80, 190, -1));
+
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GestionUsuarios.png"))); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -161,6 +176,10 @@ public class GestionUsuariosFrm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnEditarUsuarioActionPerformed
 
+    private void txtBusquedaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaKeyReleased
+        cargarTablaMatricula();
+    }//GEN-LAST:event_txtBusquedaKeyReleased
+
   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -169,10 +188,12 @@ public class GestionUsuariosFrm extends javax.swing.JFrame {
     private javax.swing.JButton btnRegresar;
     private javax.swing.JButton btnVolver;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable tablaUsuarios;
+    private javax.swing.JTextField txtBusqueda;
     // End of variables declaration//GEN-END:variables
 
 
@@ -197,6 +218,35 @@ public class GestionUsuariosFrm extends javax.swing.JFrame {
             tablaUsuarios.setModel(tabla);
         }  
     }
+    
+    private void cargarTablaMatricula(){
+        DefaultTableModel tabla = (DefaultTableModel) tablaUsuarios.getModel();
+        
+        String titulos[] = {"Matricula","Nombre","Apellidos","F.Nacimiento","Curp"};
+        tabla.setColumnIdentifiers(titulos);
+        
+        listaTabla = usuario.findUsuarioEntityEntities();
+        List<UsuarioEntity> aux = new ArrayList<>();
+        if (listaTabla != null) {
+            if (!txtBusqueda.getText().equalsIgnoreCase("")) {
+                for(UsuarioEntity usu : listaTabla){
+                    String matricula = usu.getMatricula();
+                    
+                    if(matricula.contains(txtBusqueda.getText())){
+                        aux.add(usu);
+                    }
+                }
+                listaTabla = aux;
+            }
+            tabla.setRowCount(0);
+            for(UsuarioEntity usu : listaTabla){
+                Object[] objeto = {usu.getMatricula(), usu.getNombre(),usu.getApellidos(),usu.getFechaNacimiento(),usu.getCurp()};
+                tabla.addRow(objeto);
+            }
+            tablaUsuarios.setModel(tabla);
+        }
+    }
+    
     
     public void mostrarMensaje (String mensaje, String tipo, String titulo){
         JOptionPane optionPane = new JOptionPane(mensaje);
