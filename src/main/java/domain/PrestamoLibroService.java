@@ -27,4 +27,15 @@ public class PrestamoLibroService {
         }
         return false;
     }
+
+    public boolean devolverLibro(Long libroId) {
+        LibroEntity libro = libroDAO.findById(libroId);
+        if (libro != null && libro.getEstado() == EstadoLibro.PRESTADO) {
+            libro.setEstado(EstadoLibro.DISPONIBLE);
+            libroDAO.update(libro);
+            return true;
+        }
+        return false;
+    }
+
 }
