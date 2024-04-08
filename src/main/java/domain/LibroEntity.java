@@ -204,5 +204,31 @@ public class LibroEntity implements Serializable {
     public List<LibroEntity> findLibroEntityEntities() {
         return getDataAccessConnection().findLibroEntityEntities(true, -1, -1);
     }
+    
+    
+    public LibroEntity prestarLibro(LibroEntity libro) {
+        libro = getDataAccessConnection().findLibroEntity(libro.getId());
+        libro.setEstado(EstadoLibro.PRESTADO);
+        JOptionPane.showMessageDialog(null, "Se ha realizado el prestamo");
+        return getDataAccessConnection().update(libro);
+    }
 
+    public LibroEntity devolverLibro(LibroEntity libro) {
+        libro = getDataAccessConnection().findLibroEntity(libro.getId());
+        libro.setEstado(EstadoLibro.DISPONIBLE);
+        JOptionPane.showMessageDialog(null, "Se ha devuelto el libro");
+        return getDataAccessConnection().update(libro);
+    }
+
+    public List<LibroEntity> cargarLibrosDisponibles() {
+        return getDataAccessConnection().filtrarLibrosDisponibles();
+    }
+
+    public List<LibroEntity> cargarLibrosPrestados() {
+        return getDataAccessConnection().filtrarLibrosPrestados();
+    }
 }
+    
+    
+
+

@@ -22,27 +22,36 @@ import javax.persistence.Table;
  *
  * @author luisp
  */
-
 public class ValoracionLibro implements Serializable {
-
-
 
     public float obtieneValoracion(String[] keywords) {
 
         for (String keyword : keywords) {
-            
+
             try {
                 if (consultaValoracionAPI(keyword) != 0) {
-                    
+
                     return consultaValoracionAPI(keyword);
-                   
+
                 }
             } catch (Exception e) {
                 System.out.println("Ocurrió un error en la obtención de las valoraciones individuales");
             }
             break;
         }
-      return 0;
+        return 0;
+    }
+
+    public float obtieneValoracionLibro(String titulo) {
+        try {
+            if (consultaValoracionAPI(titulo) != 0) {
+                return consultaValoracionAPI(titulo);
+            }
+        } catch (Exception e) {
+            System.out.println("Ocurrió un error al obtener la valoración del libro indicado");
+        }
+    
+        return 0;
     }
 
     private float consultaValoracionAPI(String nombreLibro) {
@@ -79,14 +88,14 @@ public class ValoracionLibro implements Serializable {
 
                 // Printing average rating
                 System.out.println("Average Rating: " + averageRating);
-  
+
                 return (float) averageRating;
             }
         } catch (Exception e) {
             System.err.println(e);
         }
 
-    return 0;
+        return 0;
     }
 
 }

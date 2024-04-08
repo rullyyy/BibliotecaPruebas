@@ -251,5 +251,19 @@ public class BibliotecarioEntity implements Serializable {
        LibroEntity libro = new LibroEntity();
        return libro.buscarLibroPorId(id); 
    }
+   
+       public LibroEntity prestarLibro(DTOAgregarLibro libroDTO) throws IllegalAccessException, InstantiationException{
+        LibroEntity libro = crearEntidadConDTO(libroDTO, LibroEntity.class);
+        libro.setEstado(EstadoLibro.PRESTADO);
+        return libro.prestarLibro(libro);
+    }
+    
+    public LibroEntity devolverLibro(DTOAgregarLibro libroDTO) throws IllegalAccessException, InstantiationException{
+        LibroEntity libro = crearEntidadConDTO(libroDTO, LibroEntity.class);
+        libro.setEstado(EstadoLibro.DISPONIBLE);
+        return libro.devolverLibro(libro);
+    }
+
+   
 
 }
