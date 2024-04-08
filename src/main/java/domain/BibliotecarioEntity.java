@@ -210,10 +210,13 @@ public class BibliotecarioEntity implements Serializable {
   
     }
     
+    
+    
+    
     public LibroEntity editaLibro(DTOAgregarLibro libroDTO) throws IllegalAccessException, InstantiationException{
         LibroEntity lb = new LibroEntity();
         
-        LibroEntity libroExistente = lb.buscarLibroPorId(libroDTO);
+        LibroEntity libroExistente = lb.buscarLibroConDTO(libroDTO);
         
         libroExistente.setTitulo(libroDTO.getTitulo());
         libroExistente.setAutor(libroDTO.getAutor());
@@ -229,7 +232,7 @@ public class BibliotecarioEntity implements Serializable {
     
     public Long eliminaLibro(DTOAgregarLibro DTOlibro)throws NonexistentEntityException{
         LibroEntity lb = new LibroEntity();
-        LibroEntity libroExistente = lb.buscarLibroPorId(DTOlibro);
+        LibroEntity libroExistente = lb.buscarLibroConDTO(DTOlibro);
         
         libroExistente.setId(DTOlibro.getId());
         libroExistente.setTitulo(DTOlibro.getTitulo());
@@ -238,8 +241,15 @@ public class BibliotecarioEntity implements Serializable {
    
     }
     
-    
+    public float solicitaValoracionLibro(LibroEntity libro){
+        String [] keyword = libro.getKeyword();
+        ValoracionLibro valoracionLibro = new ValoracionLibro();
+        return valoracionLibro.obtieneValoracion(keyword);
+    }
 
-   
+   public LibroEntity obtieneLibro(Long id){
+       LibroEntity libro = new LibroEntity();
+       return libro.buscarLibroPorId(id); 
+   }
 
 }

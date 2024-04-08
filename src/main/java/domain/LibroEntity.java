@@ -10,6 +10,7 @@ import dataAccess.exceptions.NonexistentEntityException;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Locale;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -17,6 +18,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.swing.JOptionPane;
 import ui.DTOAgregarLibro;
 
@@ -188,12 +191,17 @@ public class LibroEntity implements Serializable {
 
     }
 
-    public LibroEntity buscarLibroPorId(DTOAgregarLibro libro) {
+    public LibroEntity buscarLibroConDTO(DTOAgregarLibro libro) {
 
         return getDataAccessConnection().findLibroEntity(libro.getId());
     }
-    
-    public List<LibroEntity> findLibroEntityEntities(){
+
+    public LibroEntity buscarLibroPorId(Long id) {
+
+        return getDataAccessConnection().findLibroEntity(id);
+    }
+
+    public List<LibroEntity> findLibroEntityEntities() {
         return getDataAccessConnection().findLibroEntityEntities(true, -1, -1);
     }
 

@@ -89,6 +89,7 @@ public class GestionLibrosFrm extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        btnSolicitaValoracion = new javax.swing.JButton();
         btnVolver = new javax.swing.JButton();
         btnAgregar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -104,6 +105,14 @@ public class GestionLibrosFrm extends javax.swing.JFrame {
         setResizable(false);
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnSolicitaValoracion.setText("Solicitar valoracion");
+        btnSolicitaValoracion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSolicitaValoracionActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnSolicitaValoracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 160, -1, -1));
 
         btnVolver.setContentAreaFilled(false);
         btnVolver.addActionListener(new java.awt.event.ActionListener() {
@@ -252,11 +261,23 @@ public class GestionLibrosFrm extends javax.swing.JFrame {
         cargarTablaLibros();
     }//GEN-LAST:event_txtLibroKeyReleased
 
+    private void btnSolicitaValoracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSolicitaValoracionActionPerformed
+        // TODO add your handling code here:
+          int selectedRow = librosTable.getSelectedRow();
+          BibliotecarioEntity bibliotecario = new BibliotecarioEntity(); 
+          if (selectedRow!=-1){
+              LibroEntity libro = bibliotecario.obtieneLibro((long) librosTable.getValueAt(selectedRow, 0));
+              new ValoracionLibroFrm(libro).setVisible(true); 
+          }
+        
+    }//GEN-LAST:event_btnSolicitaValoracionActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnSolicitaValoracion;
     private javax.swing.JButton btnVolver;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

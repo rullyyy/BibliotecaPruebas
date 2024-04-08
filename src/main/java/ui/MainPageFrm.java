@@ -109,7 +109,6 @@ public class MainPageFrm extends javax.swing.JFrame {
       new GestionPrestamosFrm().setVisible(true);
     }//GEN-LAST:event_gestionarPrestamosBtnActionPerformed
 
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton gestionarLibrosBtn;
     private javax.swing.JButton gestionarPrestamosBtn;

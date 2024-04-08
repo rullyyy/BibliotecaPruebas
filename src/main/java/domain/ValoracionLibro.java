@@ -22,37 +22,30 @@ import javax.persistence.Table;
  *
  * @author luisp
  */
-@Entity
-@Table(name = "valoracion_libro")
+
 public class ValoracionLibro implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = SEQUENCE, generator = "ID_SEQ")
-    @Column(name = "id")
-    private long id;
-    @Column(name = "calificacion")
-    private int calificacion;
-    @Column(name = "review")
-    private String review;
 
-    public int getCalificacion() {
-        return calificacion;
+
+    public float obtieneValoracion(String[] keywords) {
+
+        for (String keyword : keywords) {
+            
+            try {
+                if (consultaValoracionAPI(keyword) != 0) {
+                    
+                    return consultaValoracionAPI(keyword);
+                   
+                }
+            } catch (Exception e) {
+                System.out.println("Ocurrió un error en la obtención de las valoraciones individuales");
+            }
+            break;
+        }
+      return 0;
     }
 
-    public void setCalificacion(int calificacion) {
-        this.calificacion = calificacion;
-    }
-
-    public String getReview() {
-        return review;
-    }
-
-    public void setReview(String review) {
-        this.review = review;
-    }
-
-    public float obtieneValoracionLibro(String nombreLibro) {
+    private float consultaValoracionAPI(String nombreLibro) {
         Scanner tec = new Scanner(System.in);
 
         final String requestURL = String.format("https://www.googleapis.com/books/v1/volumes?q=%s", nombreLibro);
@@ -86,12 +79,14 @@ public class ValoracionLibro implements Serializable {
 
                 // Printing average rating
                 System.out.println("Average Rating: " + averageRating);
+  
+                return (float) averageRating;
             }
         } catch (Exception e) {
             System.err.println(e);
         }
 
-        return 0;
+    return 0;
     }
 
 }

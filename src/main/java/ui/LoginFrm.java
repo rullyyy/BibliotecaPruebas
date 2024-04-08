@@ -77,7 +77,7 @@ public class LoginFrm extends javax.swing.JFrame {
         DTOLogin dtoLogin = new DTOLogin(Long.valueOf(
                 this.txtMatricula.getText()),
                 this.txtPassword.getText());
-        if (solicitaLogin(dtoLogin).getId()!= 0) {
+        if (solicitaLogin(dtoLogin).getId() != 0) {
             JOptionPane.showMessageDialog(null, "¡Bienvenido " + solicitaLogin(dtoLogin).getNombre() + "!");
             new MainPageFrm().setVisible(true);
             this.dispose();
@@ -88,7 +88,7 @@ public class LoginFrm extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnIniciarSesionActionPerformed
 
-  
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnIniciarSesion;
     private javax.swing.JLabel jLabel1;
