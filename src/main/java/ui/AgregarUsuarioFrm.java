@@ -4,7 +4,10 @@
  */
 package ui;
 
+import domain.BibliotecarioEntity;
 import domain.UsuarioEntity;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -104,13 +107,19 @@ public class AgregarUsuarioFrm extends javax.swing.JFrame {
 
     private void btnAgregarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarUsuarioActionPerformed
         if(validaCamposVacios() == true){
-            UsuarioEntity usuarioAccess = new UsuarioEntity();
+            BibliotecarioEntity usuarioAccess = new BibliotecarioEntity();
             
             DTOAgregarUsuario agregarUsuarioDTO = new DTOAgregarUsuario(txtNombre.getText(), txtApellido.getText(),
                     txtFecha.getDate(), txtCurp.getText(), txtMatricula.getText());
             
-            usuarioAccess.create(agregarUsuarioDTO);
-            JOptionPane.showMessageDialog(null, "Se ha guardado el usuario correctamente");
+            try {
+                usuarioAccess.registraUsuario(agregarUsuarioDTO);
+            } catch (IllegalAccessException ex) {
+                Logger.getLogger(AgregarUsuarioFrm.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InstantiationException ex) {
+                Logger.getLogger(AgregarUsuarioFrm.class.getName()).log(Level.SEVERE, null, ex);
+            }
+           
             
             this.dispose();
             new GestionUsuariosFrm().setVisible(true);

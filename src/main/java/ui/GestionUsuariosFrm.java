@@ -6,6 +6,7 @@ package ui;
 
 import domain.UsuarioEntity;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
@@ -160,10 +161,17 @@ public class GestionUsuariosFrm extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void btnEditarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarUsuarioActionPerformed
+        int selectedRow = tablaUsuarios.getSelectedRow();
         if(tablaUsuarios.getRowCount() > 0){
             if(tablaUsuarios.getSelectedRow() !=-1){
-                int id = Integer.parseInt(String.valueOf(tablaUsuarios.getValueAt(tablaUsuarios.getSelectedRow(), 0)));
-                EditarUsuarioFrm pantallaEditar = new EditarUsuarioFrm(id);
+                UsuarioEntity usuarioAEditar = new UsuarioEntity();
+                usuarioAEditar.setId((int) tablaUsuarios.getValueAt(selectedRow, 0));
+                usuarioAEditar.setNombre(String.valueOf(tablaUsuarios.getValueAt(selectedRow, 1)));
+                usuarioAEditar.setApellidos(String.valueOf(tablaUsuarios.getValueAt(selectedRow, 2)));
+                usuarioAEditar.setFechaNacimiento((Date) tablaUsuarios.getValueAt(selectedRow, 3));
+                usuarioAEditar.setCurp(String.valueOf(tablaUsuarios.getValueAt(selectedRow, 4)));
+                usuarioAEditar.setMatricula(String.valueOf(tablaUsuarios.getValueAt(selectedRow, 5)));
+                EditarUsuarioFrm pantallaEditar = new EditarUsuarioFrm(usuarioAEditar);
                 pantallaEditar.setVisible(true);
                 pantallaEditar.setLocationRelativeTo(null);
                 
@@ -206,13 +214,13 @@ public class GestionUsuariosFrm extends javax.swing.JFrame {
             }
         };
         
-        String titulos[] = {"Matricula","Nombre","Apellidos","F.Nacimiento","Curp"};
+        String titulos[] = {"ID","Nombre","Apellidos","F.Nacimiento","Curp","Matricula"};
         tabla.setColumnIdentifiers(titulos);
         List<UsuarioEntity> listaUsuarios = usuario.findUsuarioEntityEntities();
         
         if(listaUsuarios != null){
             for(UsuarioEntity usu : listaUsuarios){
-                Object[] objeto = {usu.getMatricula(), usu.getNombre(),usu.getApellidos(),usu.getFechaNacimiento(),usu.getCurp()};
+                Object[] objeto = {usu.getId(), usu.getNombre(),usu.getApellidos(),usu.getFechaNacimiento(),usu.getCurp(), usu.getMatricula()};
                 tabla.addRow(objeto);
             }
             tablaUsuarios.setModel(tabla);

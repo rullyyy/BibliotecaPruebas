@@ -153,16 +153,27 @@ public class BibliotecarioEntity implements Serializable {
             for (Field campoEntidad : camposEntidad) {
                 campoEntidad.setAccessible(true);
                 if (campoEntidad.getName().equals(campoDTO.getName())) {
-                    campoEntidad.set(entidad, campoDTO.get(dto));
+                    Object value = campoDTO.get(dto);
+                    if (value instanceof LocalDate && campoEntidad.getType().equals(Date.class)) {
+                        LocalDate localDate = (LocalDate) value;
+                        Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+                        campoEntidad.set(entidad, date);
+                    } else {
+                        campoEntidad.set(entidad, campoDTO.get(dto));
+                    }
                     break;
                 }
             }
         }
-
         return entidad;
     }
-    public UsuarioEntity registraUsuario(DTOAgregarUsuario usuarioDTO){
-        
+    public UsuarioEntity registraUsuario(DTOAgregarUsuario usuarioDTO) throws IllegalAccessException, InstantiationException{
+         UsuarioEntity usuario = crearEntidadConDTO(usuarioDTO, UsuarioEntity.class);
+        if(usuario.getDataAccessConnection().existeUsuario(usuario) == false){
+            return usuario.create(usuario);
+        }else{
+            JOptionPane.showMessageDialog(null, "Error: Libro Existente");
+        }
         return null;
         
     }

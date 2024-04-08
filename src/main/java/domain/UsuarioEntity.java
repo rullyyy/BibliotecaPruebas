@@ -138,9 +138,9 @@ public class UsuarioEntity implements Serializable {
      * @param usuario
      * @return
      */
-    public UsuarioEntity create(DTOAgregarUsuario usuario) {
-
-        return getDataAccessConnection().create(crearEntidadConDTO(usuario));
+    public UsuarioEntity create(UsuarioEntity usuario) {
+         JOptionPane.showMessageDialog(null, "Se ha guardado el usuario correctamente");
+        return getDataAccessConnection().create(usuario);
     }
     
     public UsuarioEntity edit(UsuarioEntity usuarioExistente){

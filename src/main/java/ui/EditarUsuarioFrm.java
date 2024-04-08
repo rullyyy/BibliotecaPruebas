@@ -22,15 +22,22 @@ import javax.swing.JTextField;
  */
 public class EditarUsuarioFrm extends javax.swing.JFrame {
 
-    UsuarioDAO usuDAO = null;
     UsuarioEntity usu;
     /**
      * Creates new form EditarUsuarioFrm
+     * @param usuario
      */
-    public EditarUsuarioFrm(int id) {
-        usuDAO = new UsuarioDAO();
+    public EditarUsuarioFrm(UsuarioEntity usuario) {
+       
         initComponents();
-        cargarDatos(id);
+        this.usu = usuario;
+        LocalDate fNac = usu.getFechaNacimiento().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        
+        txtNombre.setText(usu.getNombre());
+        txtApellido.setText(usu.getApellidos());
+        txtFecha.setDate(fNac);
+        txtCurp.setText(usu.getCurp());
+        txtMatricula.setText(usu.getMatricula());
     }
 
     /**
@@ -232,17 +239,7 @@ public class EditarUsuarioFrm extends javax.swing.JFrame {
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 
-    private void cargarDatos(int id){
-        this.usu = usuDAO.findUser(id);
-        
-        LocalDate fNac = usu.getFechaNacimiento().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        
-        txtNombre.setText(usu.getNombre());
-        txtApellido.setText(usu.getApellidos());
-        txtFecha.setDate(fNac);
-        txtCurp.setText(usu.getCurp());
-        txtMatricula.setText(usu.getMatricula());
-    }
+   
     
        private boolean validaCamposVacios(){
         if(txtNombre.getText().isBlank() || txtApellido.getText().isBlank() || txtFecha.getText().isBlank()
