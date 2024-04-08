@@ -21,5 +21,7 @@ public interface ILibroDAO {
     public String actualizaValoracionExistente();
     public LibroEntity findLibroEntity(Long id);
     public boolean existeLibro(LibroEntity libro);
+    public List<LibroEntity> filtrarLibrosDisponibles();
+    public List<LibroEntity> filtrarLibrosPrestados();
     public List<LibroEntity> findLibroEntityEntities(boolean all, int maxResults, int firstResult);
 }

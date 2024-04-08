@@ -8,7 +8,10 @@ import static org.junit.jupiter.api.Assertions.*;
 import dataAccess.ILibroDAO;
 import dataAccess.LibroDAO;
 import dataAccess.exceptions.NonexistentEntityException;
+import java.util.Arrays;
 import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import org.junit.jupiter.api.Test;
 import static org.mockito.Mockito.*;
 import org.mockito.stubbing.OngoingStubbing;
@@ -104,5 +107,22 @@ public class TestLibro {
         LibroEntity libro = new LibroEntity();
         when(mockILibroDAO.delete(libro.getId())).thenReturn(null);
         assertEquals(mockILibroDAO.delete(libro.getId()), null);
+    }
+    
+    @Test
+    public void testFiltrarLibros(){
+          EntityManager entityManager = mock(EntityManager.class);
+
+        Query query = mock(Query.class);
+
+        LibroDAO libroDAO = new LibroDAO();
+        libroDAO.setEntityManager(entityManager);
+        when(entityManager.createQuery(anyString())).thenReturn(query);
+        LibroEntity libro1 = new LibroEntity("Libro 1", "Autor 1", EstadoLibro.PRESTADO);
+        LibroEntity libro2 = new LibroEntity("Libro 2", "Autor 2", EstadoLibro.PRESTADO);
+        List<LibroEntity> librosPrestados = Arrays.asList(libro1, libro2);
+        when(query.getResultList()).thenReturn(librosPrestados);
+        List<LibroEntity> librosFiltrados = libroDAO.filtrarLibrosPrestados();
+        assertEquals(librosPrestados, librosFiltrados);
     }
 }

@@ -11,6 +11,7 @@ import domain.EstadoLibro;
 import domain.LibroEntity;
 import domain.UsuarioEntity;
 import java.util.Date;
+import java.util.List;
 import ui.DTOLogin;
 
 import ui.LoginFrm;
@@ -21,6 +22,7 @@ import ui.LoginFrm;
  */
 public class Demo {
 
+    
     /**
      * @param args the command line arguments
      */
@@ -29,12 +31,15 @@ public class Demo {
         UsuarioEntity user = new UsuarioEntity();
         new LoginFrm().setVisible(true);
 
-//        BibliotecarioEntity b = new BibliotecarioEntity(1L, "Raul", "Luna", "99");
-//        b.create(b);
+        
+        BibliotecarioEntity b = new BibliotecarioEntity(1L, "Raul", "Luna", "99");
+        b.create(b);
     
         
         
    
     }
+    
+   
 
 }

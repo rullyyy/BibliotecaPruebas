@@ -5,6 +5,7 @@
 package dataAccess;
 
 import dataAccess.exceptions.NonexistentEntityException;
+import domain.EstadoLibro;
 import domain.LibroEntity;
 import domain.UsuarioEntity;
 import java.util.List;
@@ -182,7 +183,29 @@ public class LibroDAO implements ILibroDAO {
             return false;
         }
     }
-
     
+    @Override
+    public List<LibroEntity> filtrarLibrosPrestados(){
+        String jpql = "SELECT l FROM LibroEntity l WHERE l.estado = :estado";
+        Query query = entityManager.createQuery(jpql);
+        query.setParameter("estado", EstadoLibro.PRESTADO);
+
+        List<LibroEntity> librosPrestados = query.getResultList();
+        return librosPrestados;
+    }
+
+    @Override
+    public List<LibroEntity> filtrarLibrosDisponibles(){
+        String jpql = "SELECT l FROM LibroEntity l WHERE l.estado = :estado";
+        Query query = entityManager.createQuery(jpql);
+        query.setParameter("estado", EstadoLibro.DISPONIBLE);
+
+        List<LibroEntity> librosDisponibles = query.getResultList();
+        return librosDisponibles;
+    }
+
+     public void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
 
 }
