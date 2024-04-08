@@ -37,37 +37,45 @@ public class ValoracionLibroFrm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        descripcionLabel = new javax.swing.JLabel();
+        btnVolver = new javax.swing.JButton();
         nombreLibroLabel1 = new javax.swing.JLabel();
         valoracionGeneralLabel1 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        descripcionLabel.setBackground(new java.awt.Color(0, 0, 0));
-        descripcionLabel.setFont(new java.awt.Font("Monospaced", 1, 18)); // NOI18N
-        descripcionLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        descripcionLabel.setText("Descripción");
-        getContentPane().add(descripcionLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 200, 330, 110));
+        btnVolver.setBorder(null);
+        btnVolver.setContentAreaFilled(false);
+        btnVolver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVolverActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnVolver, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 40, 30));
 
         nombreLibroLabel1.setBackground(new java.awt.Color(0, 0, 0));
         nombreLibroLabel1.setFont(new java.awt.Font("Monospaced", 1, 18)); // NOI18N
         nombreLibroLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         nombreLibroLabel1.setText("Nombre");
-        getContentPane().add(nombreLibroLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 130, 170, -1));
+        getContentPane().add(nombreLibroLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 180, 170, -1));
 
         valoracionGeneralLabel1.setBackground(new java.awt.Color(0, 0, 0));
         valoracionGeneralLabel1.setFont(new java.awt.Font("Monospaced", 1, 18)); // NOI18N
         valoracionGeneralLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         valoracionGeneralLabel1.setText("Valoración");
-        getContentPane().add(valoracionGeneralLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 380, 170, -1));
+        getContentPane().add(valoracionGeneralLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 360, 170, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ValoracionLibro.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
+       this.dispose();
+       new GestionLibrosFrm().setVisible(true);
+    }//GEN-LAST:event_btnVolverActionPerformed
 
     
     public float solicitaValoracion(LibroEntity libro){
@@ -77,7 +85,7 @@ public class ValoracionLibroFrm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel descripcionLabel;
+    private javax.swing.JButton btnVolver;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel nombreLibroLabel1;
     private javax.swing.JLabel valoracionGeneralLabel1;

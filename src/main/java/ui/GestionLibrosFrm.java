@@ -268,6 +268,8 @@ public class GestionLibrosFrm extends javax.swing.JFrame {
           if (selectedRow!=-1){
               LibroEntity libro = bibliotecario.obtieneLibro((long) librosTable.getValueAt(selectedRow, 0));
               new ValoracionLibroFrm(libro).setVisible(true); 
+          }else{
+              JOptionPane.showMessageDialog(this, "Seleccione un libro");
           }
         
     }//GEN-LAST:event_btnSolicitaValoracionActionPerformed

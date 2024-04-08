@@ -31,10 +31,10 @@ public class Demo {
         UsuarioEntity user = new UsuarioEntity();
         new LoginFrm().setVisible(true);
 
-        
-        BibliotecarioEntity b = new BibliotecarioEntity(1L, "Raul", "Luna", "99");
-        b.create(b);
-    
+//        
+//        BibliotecarioEntity b = new BibliotecarioEntity(1L, "Raul", "Luna", "99");
+//        b.create(b);
+//    
         
         
    
